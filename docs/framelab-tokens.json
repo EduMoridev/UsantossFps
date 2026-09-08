@@ -1,0 +1,125 @@
+{
+  "global": {
+    "color": {
+      "void":       { "value": "#05070A", "type": "color", "description": "Rodapé e faixas de contraste máximo" },
+      "base":       { "value": "#090C11", "type": "color", "description": "Fundo padrão de página" },
+      "surface":    { "value": "#0F141B", "type": "color", "description": "Cards, painéis e inputs" },
+      "surface-2":  { "value": "#151C25", "type": "color", "description": "Hover de card, célula interna, header de tabela" },
+      "line":       { "value": "#1E2833", "type": "color", "description": "Borda padrão de 1px" },
+      "line-soft":  { "value": "#172029", "type": "color", "description": "Divisor interno e separador de seção" },
+      "ink":        { "value": "#EEF3F8", "type": "color", "description": "Títulos e texto de alta hierarquia" },
+      "ink-2":      { "value": "#AAB6C4", "type": "color", "description": "Corpo de texto — contraste 7.4:1 sobre base" },
+      "ink-3":      { "value": "#6D7A89", "type": "color", "description": "Legendas e metadados — contraste 4.6:1" },
+      "accent":     { "value": "#00E5FF", "type": "color", "description": "Ciano elétrico. CTA primário, dado-chave, estado ativo" },
+      "accent-600": { "value": "#00B8D4", "type": "color", "description": "Estado pressionado" },
+      "accent-700": { "value": "#0091A7", "type": "color", "description": "Apoio em gradiente" },
+      "accent-soft":{ "value": "#7FF2FF", "type": "color", "description": "Hover do botão primário" },
+      "accent-ink": { "value": "#04222A", "type": "color", "description": "Texto sobre o botão ciano" },
+      "chart-before": { "value": "#2B3846", "type": "color", "description": "Série 'antes' nos gráficos" },
+      "chart-after":  { "value": "#00E5FF", "type": "color", "description": "Série 'depois' nos gráficos" }
+    },
+
+    "fontFamilies": {
+      "display": { "value": "Space Grotesk", "type": "fontFamilies" },
+      "body":    { "value": "Inter", "type": "fontFamilies" },
+      "mono":    { "value": "JetBrains Mono", "type": "fontFamilies" }
+    },
+    "fontWeights": {
+      "regular":  { "value": "Regular", "type": "fontWeights" },
+      "medium":   { "value": "Medium", "type": "fontWeights" },
+      "semibold": { "value": "SemiBold", "type": "fontWeights" },
+      "bold":     { "value": "Bold", "type": "fontWeights" }
+    },
+
+    "typography": {
+      "display": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.display}", "fontWeight": "{fontWeights.semibold}",
+        "fontSize": "68", "lineHeight": "69", "letterSpacing": "-3.5%" } },
+      "h1": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.display}", "fontWeight": "{fontWeights.semibold}",
+        "fontSize": "48", "lineHeight": "51", "letterSpacing": "-3%" } },
+      "h2": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.display}", "fontWeight": "{fontWeights.semibold}",
+        "fontSize": "34", "lineHeight": "38", "letterSpacing": "-2.5%" } },
+      "h3": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.display}", "fontWeight": "{fontWeights.semibold}",
+        "fontSize": "22", "lineHeight": "28", "letterSpacing": "-1.5%" } },
+      "body-lg": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.body}", "fontWeight": "{fontWeights.regular}",
+        "fontSize": "18", "lineHeight": "30", "letterSpacing": "0%" } },
+      "body": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.body}", "fontWeight": "{fontWeights.regular}",
+        "fontSize": "16", "lineHeight": "26", "letterSpacing": "0%" } },
+      "body-sm": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.body}", "fontWeight": "{fontWeights.regular}",
+        "fontSize": "15", "lineHeight": "24", "letterSpacing": "0%" } },
+      "small": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.body}", "fontWeight": "{fontWeights.regular}",
+        "fontSize": "14", "lineHeight": "22", "letterSpacing": "0%" } },
+      "caption": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.body}", "fontWeight": "{fontWeights.regular}",
+        "fontSize": "13", "lineHeight": "20", "letterSpacing": "0%" } },
+      "micro-mono": { "type": "typography", "value": {
+        "fontFamily": "{fontFamilies.mono}", "fontWeight": "{fontWeights.regular}",
+        "fontSize": "11", "lineHeight": "16", "letterSpacing": "16%", "textCase": "uppercase" } }
+    },
+
+    "spacing": {
+      "0-5": { "value": "2",   "type": "spacing" },
+      "1":   { "value": "4",   "type": "spacing" },
+      "2":   { "value": "8",   "type": "spacing" },
+      "3":   { "value": "12",  "type": "spacing" },
+      "4":   { "value": "16",  "type": "spacing" },
+      "5":   { "value": "20",  "type": "spacing" },
+      "6":   { "value": "24",  "type": "spacing" },
+      "7":   { "value": "28",  "type": "spacing" },
+      "10":  { "value": "40",  "type": "spacing" },
+      "14":  { "value": "56",  "type": "spacing" },
+      "20":  { "value": "80",  "type": "spacing", "description": "Padding vertical de seção — mobile" },
+      "28":  { "value": "112", "type": "spacing", "description": "Padding vertical de seção — desktop" }
+    },
+
+    "borderRadius": {
+      "xs":   { "value": "4",  "type": "borderRadius" },
+      "sm":   { "value": "8",  "type": "borderRadius", "description": "Inputs e selects" },
+      "md":   { "value": "12", "type": "borderRadius", "description": "Blocos internos e ícones" },
+      "lg":   { "value": "18", "type": "borderRadius", "description": "Cards" },
+      "xl":   { "value": "26", "type": "borderRadius" },
+      "pill": { "value": "999","type": "borderRadius", "description": "Botões e badges" }
+    },
+
+    "borderWidth": {
+      "hairline": { "value": "1", "type": "borderWidth" }
+    },
+
+    "sizing": {
+      "container":    { "value": "1200", "type": "sizing", "description": "Largura máxima do conteúdo" },
+      "gutter":       { "value": "20",   "type": "sizing", "description": "Padding lateral" },
+      "btn-md":       { "value": "44",   "type": "sizing" },
+      "btn-lg":       { "value": "56",   "type": "sizing" },
+      "header":       { "value": "72",   "type": "sizing" },
+      "touch-target": { "value": "44",   "type": "sizing" }
+    },
+
+    "boxShadow": {
+      "cta": { "type": "boxShadow", "value": {
+        "x": "0", "y": "10", "blur": "30", "spread": "-10",
+        "color": "#00E5FF", "alpha": "0.6", "type": "dropShadow" } },
+      "plan-featured": { "type": "boxShadow", "value": {
+        "x": "0", "y": "20", "blur": "60", "spread": "-30",
+        "color": "#00E5FF", "alpha": "0.5", "type": "dropShadow" } }
+    },
+
+    "opacity": {
+      "grid-tech": { "value": "3.5%", "type": "opacity", "description": "Malha técnica de fundo" },
+      "glow-hero": { "value": "11%",  "type": "opacity", "description": "Halo radial ciano do hero" }
+    }
+  },
+
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": ["global"],
+    "generatedBy": "FRAMELAB design system",
+    "note": "Importar com o plugin Tokens Studio for Figma (Settings > Import > File). Breakpoints: 640 / 768 / 1024 / 1280."
+  }
+}
