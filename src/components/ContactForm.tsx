@@ -1,16 +1,22 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CONTACT, PLANS, GAMES } from "@/lib/site";
+import { CONTACT, PLANS, GAMES, GAME_SUGGESTIONS } from "@/lib/site";
+import { CPU_OPTIONS, GPU_OPTIONS, RAM_OPTIONS, MOBO_OPTIONS } from "@/lib/hardware";
 import { Icon } from "./Icon";
+import { Combobox } from "./ui/combobox";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "./ui/select";
 
-const FIELDS = [
-  { id: "nome", label: "Como te chamo?", ph: "Seu nome ou nick", req: true, col: 1 },
-  { id: "contato", label: "WhatsApp ou Discord", ph: "(11) 90000-0000", req: true, col: 1 },
-  { id: "cpu", label: "Processador", ph: "Ryzen 5 5600 / i5-12400F", req: true, col: 1 },
-  { id: "gpu", label: "Placa de vídeo", ph: "RTX 3060 / RX 6600", req: true, col: 1 },
-  { id: "ram", label: "Memória RAM", ph: "16 GB 3200 MHz", req: false, col: 1 },
-  { id: "mobo", label: "Placa-mãe", ph: "B550M / H610M", req: false, col: 1 },
+const TEXT_FIELDS = [
+  { id: "nome", label: "Como te chamo?", ph: "Seu nome ou nick", req: true },
+  { id: "contato", label: "WhatsApp ou Discord", ph: "(11) 90000-0000", req: true },
+] as const;
+
+const HARDWARE_FIELDS = [
+  { id: "cpu", label: "Processador", ph: "Ryzen 5 5600 / i5-12400F", req: true, options: CPU_OPTIONS },
+  { id: "gpu", label: "Placa de vídeo", ph: "RTX 3060 / RX 6600", req: true, options: GPU_OPTIONS },
+  { id: "ram", label: "Memória RAM", ph: "16 GB 3200 MHz", req: false, options: RAM_OPTIONS },
+  { id: "mobo", label: "Placa-mãe", ph: "B550M / H610M", req: false, options: MOBO_OPTIONS },
 ] as const;
 
 const inputCls =
@@ -25,7 +31,9 @@ export function ContactForm() {
   });
   const set = (k: string, val: string) => setV((s) => ({ ...s, [k]: val }));
 
-  const missing = FIELDS.filter((f) => f.req && !v[f.id]?.trim()).length;
+  const missing = [...TEXT_FIELDS, ...HARDWARE_FIELDS].filter(
+    (f) => f.req && !v[f.id]?.trim()
+  ).length;
 
   const waLink = useMemo(() => {
     const msg = [
@@ -62,7 +70,7 @@ export function ContactForm() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        {FIELDS.map((f) => (
+        {TEXT_FIELDS.map((f) => (
           <div key={f.id}>
             <label className={labelCls} htmlFor={f.id}>
               {f.label} {f.req && <span className="text-accent">*</span>}
@@ -79,20 +87,48 @@ export function ContactForm() {
           </div>
         ))}
 
+        {HARDWARE_FIELDS.map((f) => (
+          <div key={f.id}>
+            <label className={labelCls} htmlFor={f.id}>
+              {f.label} {f.req && <span className="text-accent">*</span>}
+            </label>
+            <Combobox
+              id={f.id}
+              value={v[f.id] ?? ""}
+              onChange={(val) => set(f.id, val)}
+              options={f.options}
+              placeholder={f.ph}
+              required={f.req}
+            />
+          </div>
+        ))}
+
         <div>
           <label className={labelCls} htmlFor="jogo">Jogo principal</label>
-          <select id="jogo" className={inputCls} value={v.jogo} onChange={(e) => set("jogo", e.target.value)}>
-            {GAMES.map((g) => <option key={g} value={g}>{g}</option>)}
-            <option value="Outro">Outro</option>
-          </select>
+          <Combobox
+            id="jogo"
+            value={v.jogo ?? ""}
+            onChange={(val) => set("jogo", val)}
+            options={GAME_SUGGESTIONS}
+            placeholder="Comece a digitar o jogo"
+          />
         </div>
 
         <div>
           <label className={labelCls} htmlFor="plano">Plano de interesse</label>
-          <select id="plano" className={inputCls} value={v.plano} onChange={(e) => set("plano", e.target.value)}>
-            {PLANS.map((p) => <option key={p.id} value={p.name}>{p.name} — {p.price}</option>)}
-            <option value="Ainda não sei">Ainda não sei</option>
-          </select>
+          <Select value={v.plano} onValueChange={(val) => set("plano", val)}>
+            <SelectTrigger id="plano">
+              <SelectValue placeholder="Escolha um plano" />
+            </SelectTrigger>
+            <SelectContent>
+              {PLANS.map((p) => (
+                <SelectItem key={p.id} value={p.name}>
+                  {p.name} — {p.price}
+                </SelectItem>
+              ))}
+              <SelectItem value="Ainda não sei">Ainda não sei</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="sm:col-span-2">

@@ -198,6 +198,19 @@
   transition: border-color 0.18s var(--ease-out-fast), background-color 0.18s var(--ease-out-fast), backdrop-filter 0.18s var(--ease-out-fast), transform 0.18s var(--ease-out-fast);
 }
 
+/* Entrada de popovers/dropdowns (Radix) — usa o data-state que a lib
+   já expõe, sem depender de plugin de animação do Tailwind. */
+@utility dropdown-anim {
+  transform-origin: var(--radix-popover-content-transform-origin, var(--radix-select-content-transform-origin, center));
+  &[data-state="open"] {
+    animation: fl-pop 0.16s var(--ease-out-fast);
+  }
+}
+@keyframes fl-pop {
+  from { opacity: 0; transform: scale(0.96) translateY(-2px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 @utility card-hover {
   &:hover {
     border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
@@ -211,10 +224,6 @@
 /* ============================================================
    ANIMAÇÕES (curtas — 150–420ms — nunca decorativas em loop longo)
    ============================================================ */
-@keyframes fl-rise {
-  from { opacity: 0; transform: translate(var(--reveal-x, 0px), var(--reveal-y, 14px)); }
-  to { opacity: 1; transform: none; }
-}
 @keyframes fl-bar {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -224,18 +233,6 @@
   35% { opacity: 0.5; }
   100% { transform: translateY(400%); opacity: 0; }
 }
-
-/* Scroll reveal — direção controlada por --reveal-x/--reveal-y.
-   Padrão: sobe 14px. .reveal-left/.reveal-right entram pela lateral. */
-.reveal {
-  opacity: 0;
-  transform: translate(var(--reveal-x, 0px), var(--reveal-y, 14px));
-}
-.reveal.is-in {
-  animation: fl-rise 0.6s var(--ease-out-fast) forwards;
-}
-.reveal-left { --reveal-x: -32px; --reveal-y: 0px; }
-.reveal-right { --reveal-x: 32px; --reveal-y: 0px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

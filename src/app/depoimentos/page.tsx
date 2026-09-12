@@ -33,7 +33,7 @@ export default function DepoimentosPage() {
 
         <div className="mt-10 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
           <Reveal dir="left">
-            <div className="card relative h-full overflow-hidden p-8 md:p-10">
+            <div className="glass-strong relative h-full overflow-hidden rounded-lg p-8 md:p-10">
               <Icon name="quote" size={40} className="mb-6 text-accent/25" />
               <blockquote className="text-xl leading-relaxed text-ink md:text-2xl md:leading-[1.5]">
                 &ldquo;{featured.text}&rdquo;

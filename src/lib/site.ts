@@ -85,6 +85,36 @@ export const GAMES = [
   "OVERWATCH 2", "THE FINALS",
 ];
 
+/* Lista maior, só para sugestão no combobox do formulário de contato —
+   a faixa de logos da home (GAMES acima) fica curta de propósito. */
+export const GAME_SUGGESTIONS = [
+  ...GAMES,
+  "GTA V", "GTA Online", "Minecraft", "Roblox", "Free Fire",
+  "Genshin Impact", "Honkai: Star Rail", "Wuthering Waves",
+  "Call of Duty: Black Ops 6", "Call of Duty: Warzone", "Call of Duty: MW3",
+  "Battlefield 2042", "Battlefield 6", "Delta Force",
+  "Elden Ring", "Dark Souls III", "Baldur's Gate 3", "Cyberpunk 2077",
+  "The Witcher 3", "Red Dead Redemption 2", "Black Myth: Wukong",
+  "Diablo IV", "Path of Exile", "Path of Exile 2", "World of Warcraft",
+  "Lost Ark", "Throne and Liberty", "Albion Online", "Tibia",
+  "Naraka: Bladepoint", "PUBG Mobile", "Free Fire Max",
+  "Marvel Rivals", "Overwatch", "Paladins", "Smite", "Splitgate 2",
+  "Tom Clancy's Rainbow Six Siege", "Escape from Tarkov", "Hunt: Showdown",
+  "Rust", "DayZ", "ARK: Survival Ascended", "Palworld", "7 Days to Die",
+  "Sea of Thieves", "Destiny 2", "Halo Infinite",
+  "Left 4 Dead 2", "Deep Rock Galactic", "Helldivers 2",
+  "Phasmophobia", "Lethal Company", "R.E.P.O.",
+  "GTA San Andreas", "FiveM", "Euro Truck Simulator 2",
+  "FC 25", "FC 26", "eFootball", "NBA 2K25",
+  "Mortal Kombat 1", "Tekken 8", "Street Fighter 6", "Guilty Gear Strive",
+  "Terraria", "Stardew Valley", "Among Us", "Fall Guys", "Brawlhalla",
+  "Clash Royale", "Clash of Clans", "Brawl Stars", "Mobile Legends",
+  "Wild Rift", "Honor of Kings",
+  "iRacing", "Assetto Corsa Competizione", "Forza Horizon 5", "F1 24",
+  "World of Tanks", "War Thunder", "Enlisted",
+  "Outro",
+];
+
 /* ---------------------------------------------- SERVIÇOS */
 export type Service = {
   slug: string;
