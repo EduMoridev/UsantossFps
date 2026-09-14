@@ -1,14 +1,17 @@
 import Link from "next/link";
 import {
-  BRAND, CONTACT, HERO_STATS, SERVICES, PLANS, TESTIMONIALS, PROCESS_STEPS, CASES,
+  BRAND, CONTACT, HERO_STATS, SERVICES, PLANS, PROCESS_STEPS, CASES,
 } from "@/lib/site";
 import { Button, Badge, Section, SectionHead, Eyebrow, StatBlock } from "@/components/UI";
 import { Icon } from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 import { DeltaBars, FrametimeChart } from "@/components/Chart";
 import {
-  CTABand, GameMarquee, ProofNumbers, ServiceCard, TestimonialCard, TrustStrip,
+  CTABand, GameMarquee, ProofNumbers, ServiceCard, TrustStrip,
 } from "@/components/Blocks";
+import { FAQHome } from "@/components/FAQHome";
+import { PlanComparison } from "@/components/PlanComparison";
+import { TestimonialsMarquee } from "@/components/TestimonialsMarquee";
 
 export default function Home() {
   const hero = CASES[0];
@@ -231,7 +234,6 @@ export default function Home() {
           eyebrow="planos"
           title="Três pacotes. Sem letra miúda."
           lead="Preço fechado antes de começar. Se no diagnóstico o ganho não justificar, eu falo."
-          action={<Button href="/planos" variant="ghost" icon="arrow">Comparar em detalhe</Button>}
         />
         <div className="grid gap-4 md:grid-cols-3">
           {PLANS.map((p, i) => (
@@ -261,6 +263,8 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
+
+        <PlanComparison />
       </Section>
 
       {/* ============================================ PROVA SOCIAL */}
@@ -274,13 +278,9 @@ export default function Home() {
         <Reveal className="mb-8">
           <ProofNumbers />
         </Reveal>
-        <div className="grid gap-4 md:grid-cols-3">
-          {TESTIMONIALS.slice(0, 3).map((t, i) => (
-            <Reveal key={t.handle} delay={i * 60} dir={i % 2 === 0 ? "left" : "right"}>
-              <TestimonialCard t={t} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <TestimonialsMarquee />
+        </Reveal>
       </Section>
 
       {/* ============================================ CONFIANÇA */}
@@ -300,6 +300,8 @@ export default function Home() {
           </Link>
         </div>
       </Section>
+
+      <FAQHome />
 
       <CTABand />
     </>
