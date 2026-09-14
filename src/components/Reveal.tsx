@@ -1,73 +1,89 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
-import type { ScrollRevealObject } from "scrollreveal";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
-/* Entrada sutil ao rolar, via ScrollReveal.js (scrollrevealjs.org).
-   dir controla de onde o elemento surge: "up" (padrão, baixo pra cima),
-   "left" ou "right" (lateral) — misturar direções dá ritmo à página.
-   A lib toca DOM/window, então só é importada dentro do useEffect
-   (client-only) — um import estático quebraria o SSR. */
-const ORIGIN = { up: "bottom", left: "left", right: "right" } as const;
+/* Entrada sutil ao rolar, via IntersectionObserver nativo — sem lib
+   externa. dir controla de onde o elemento surge: "up" (padrão, baixo
+   pra cima), "left" ou "right" (lateral).
 
-/* ScrollReveal calcula visibilidade dentro de um requestAnimationFrame.
-   Se a página carregar com a aba em segundo plano (restaurada pelo
-   navegador, aberta sem foco etc.), o navegador suspende o rAF e o
-   cálculo inicial nunca roda — nem os listeners de scroll/resize chegam
-   a ser registrados, então o conteúdo fica invisível para sempre, mesmo
-   depois de focar a aba. Por isso, ao voltar o foco, forçamos um
-   `sync()` (reavalia tudo do zero) uma única vez para todo o site. */
-let srInstance: ScrollRevealObject | undefined;
-let visibilityHookAttached = false;
+   Crítico para SSR: o estado inicial é SEMPRE visível (é o que o
+   servidor renderiza). A classe que oculta o elemento só é ligada
+   dentro de um efeito — ou seja, só existe depois que o componente
+   monta no navegador. Se o JS falhar ou não rodar, o HTML do servidor
+   já está visível e nada quebra. Usamos useLayoutEffect (síncrono,
+   antes do paint) para essa troca não gerar um flash visível de
+   conteúdo aparecendo e sumindo antes de revelar de verdade. */
 
-function ensureVisibilitySync() {
-  if (visibilityHookAttached) return;
-  visibilityHookAttached = true;
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") srInstance?.sync();
-  });
-}
+type Direction = "up" | "left" | "right";
+
+const HIDDEN_OFFSET: Record<Direction, string> = {
+  up: "translate-y-3.5",
+  left: "-translate-x-8",
+  right: "translate-x-8",
+};
+
+// useLayoutEffect gera warning no SSR ("does nothing on the server");
+// como este componente só roda no cliente, cai para useEffect lá,
+// evitando o aviso sem perder o benefício (trocar de estado antes do paint).
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export function Reveal({
-  children, delay = 0, className = "", dir = "up",
-}: { children: ReactNode; delay?: number; className?: string; dir?: "up" | "left" | "right" }) {
+  children,
+  delay = 0,
+  dir = "up",
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  dir?: Direction;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
+  // Só passa a existir "estado oculto" depois que o componente montou —
+  // é essa troca que fica de fora do HTML gerado no servidor.
+  const [armed, setArmed] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.opacity = "1";
+  useIsomorphicLayoutEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setVisible(true);
       return;
     }
 
-    let cancelled = false;
+    setArmed(true);
 
-    import("scrollreveal").then(({ default: ScrollReveal }) => {
-      if (cancelled) return;
-      srInstance = ScrollReveal();
-      ensureVisibilitySync();
-      srInstance.reveal(el, {
-        delay,
-        duration: 600,
-        distance: dir === "up" ? "14px" : "32px",
-        origin: ORIGIN[dir],
-        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-        viewFactor: 0.12,
-        viewOffset: { bottom: 60 },
-        reset: false,
-      });
-    });
+    const el = ref.current;
+    if (!el) return;
 
-    return () => {
-      cancelled = true;
-      srInstance?.clean(el);
-    };
-  }, [delay, dir]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          setVisible(true);
+          observer.unobserve(entry.target); // revela uma única vez
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const hidden = armed && !visible;
 
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <div
+      ref={ref}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      className={cn(
+        "transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+        hidden ? cn("opacity-0", HIDDEN_OFFSET[dir]) : "opacity-100 translate-x-0 translate-y-0",
+        className,
+      )}
+    >
       {children}
     </div>
   );

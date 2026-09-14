@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { AnchorHTMLAttributes, ReactNode, Ref } from "react";
 import { Button as HeroButton, Chip } from "@heroui/react";
 import { Icon } from "./Icon";
 import { Reveal } from "./Reveal";
@@ -38,13 +38,19 @@ export function Button({
       variant={VARIANT_MAP[variant]}
       size={size}
       className={`group !rounded-lg font-medium whitespace-nowrap ${VARIANT_CLS[variant]} ${className}`}
-      render={(props) =>
-        isExternal ? (
-          <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
+      render={(props) => {
+        // A HeroUI/react-aria tipa `render` para o elemento raiz padrão
+        // (<button>), mas aqui ele sempre vira navegação (<a>/<Link>) —
+        // o cast reflete isso; os handlers e o ref continuam repassados.
+        const linkProps = props as unknown as AnchorHTMLAttributes<HTMLAnchorElement> & {
+          ref?: Ref<HTMLAnchorElement>;
+        };
+        return isExternal ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" {...linkProps} />
         ) : (
-          <Link href={href} {...props} />
-        )
-      }
+          <Link href={href} {...linkProps} />
+        );
+      }}
     >
       {children}
       {icon && (
