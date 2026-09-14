@@ -42,7 +42,7 @@ export default function FaqPage() {
               ))}
             </nav>
 
-            <div className="mt-8 hidden rounded-lg border border-line bg-surface p-5 lg:block">
+            <div className="glass mt-8 hidden rounded-lg p-5 lg:block">
               <div className="text-sm font-semibold text-ink">Não achou?</div>
               <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-ink-3">
                 {CONTACT.responseTime}. Sem robô, sem script de vendas.

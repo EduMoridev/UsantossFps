@@ -238,7 +238,9 @@ export default function Home() {
             <Reveal key={p.id} delay={i * 60} dir={i % 2 === 0 ? "left" : "right"}>
               <div
                 className={`card card-hover flex h-full flex-col gap-5 p-7 ${
-                  p.featured ? "border-accent/40 bg-surface-2" : ""
+                  p.featured
+                    ? "glass-strong !border-accent/45 shadow-[0_20px_60px_-30px_rgba(34,197,94,0.5)]"
+                    : ""
                 }`}
               >
                 <div className="flex items-center justify-between gap-3">
