@@ -412,96 +412,13 @@ export const SERVICES: Service[] = [
   },
 ];
 
-/* ---------------------------------------------- PLANOS */
-export type Plan = {
-  id: string;
-  name: string;
-  price: string;
-  period: string;
-  pitch: string;
-  featured?: boolean;
-  badge?: string;
-  duration: string;
-  cta: string;
-  features: { label: string; included: boolean }[];
-};
-
-export const PLANS: Plan[] = [
-  {
-    id: "essencial",
-    name: "Essencial",
-    price: "R$ 89",
-    period: "pagamento único",
-    pitch: "Para quem quer tirar o peso do sistema e sentir o jogo respirar.",
-    duration: "60 a 90 min",
-    cta: "Começar pelo Essencial",
-    features: [
-      { label: "Otimização completa do Windows", included: true },
-      { label: "Remoção de bloatware e processos em segundo plano", included: true },
-      { label: "Plano de energia e prioridade de processo", included: true },
-      { label: "Painel da placa de vídeo configurado", included: true },
-      { label: "Relatório antes/depois de FPS", included: true },
-      { label: "Garantia de 7 dias", included: true },
-      { label: "Tuning de 1 jogo específico", included: false },
-      { label: "Drivers e BIOS (XMP/EXPO, ReBAR)", included: false },
-      { label: "Medição de input lag ponta a ponta", included: false },
-      { label: "Setup de live e gravação", included: false },
-      { label: "Suporte pós-atendimento", included: false },
-    ],
-  },
-  {
-    id: "competitivo",
-    name: "Competitivo",
-    price: "R$ 169",
-    period: "pagamento único",
-    pitch: "O padrão de quem joga ranqueado e liga para 1% low e input lag.",
-    featured: true,
-    badge: "Mais escolhido",
-    duration: "2 a 3 h",
-    cta: "Quero o Competitivo",
-    features: [
-      { label: "Otimização completa do Windows", included: true },
-      { label: "Remoção de bloatware e processos em segundo plano", included: true },
-      { label: "Plano de energia e prioridade de processo", included: true },
-      { label: "Painel da placa de vídeo configurado", included: true },
-      { label: "Relatório antes/depois de FPS", included: true },
-      { label: "Garantia de 7 dias", included: true },
-      { label: "Tuning de 1 jogo específico", included: true },
-      { label: "Drivers e BIOS (XMP/EXPO, ReBAR)", included: true },
-      { label: "Medição de input lag ponta a ponta", included: true },
-      { label: "Setup de live e gravação", included: false },
-      { label: "Suporte pós-atendimento", included: true },
-    ],
-  },
-  {
-    id: "elite",
-    name: "Elite",
-    price: "R$ 289",
-    period: "pagamento único",
-    pitch: "Máquina inteira revisada, incluindo transmissão e acompanhamento.",
-    duration: "4 a 6 h (pode ser em 2 sessões)",
-    cta: "Falar sobre o Elite",
-    features: [
-      { label: "Otimização completa do Windows", included: true },
-      { label: "Remoção de bloatware e processos em segundo plano", included: true },
-      { label: "Plano de energia e prioridade de processo", included: true },
-      { label: "Painel da placa de vídeo configurado", included: true },
-      { label: "Relatório antes/depois de FPS", included: true },
-      { label: "Garantia de 7 dias", included: true },
-      { label: "Tuning de até 3 jogos", included: true },
-      { label: "Drivers e BIOS (XMP/EXPO, ReBAR)", included: true },
-      { label: "Medição de input lag ponta a ponta", included: true },
-      { label: "Setup de live e gravação", included: true },
-      { label: "Suporte pós-atendimento por 30 dias", included: true },
-    ],
-  },
-];
-
-export const PLAN_NOTES = [
-  "Valores de referência para hardware doméstico. Setups com mais de um PC ou uso profissional são orçados à parte.",
-  "Pagamento em PIX à vista ou cartão em até 3x (condições no atendimento).",
-  "Formatação com instalação limpa entra como adicional de R$ 129 em qualquer plano.",
-];
+/* ---------------------------------------------- PLANOS
+   Migrado para src/lib/planos.ts (PLANOS, FORMAS_PAGAMENTO,
+   PERIODO_PAGAMENTO) — Essencial/Competitivo/Elite deram lugar a Start
+   FPS/Not Extreme/Advanced FPS/Pro Experience. Não recriar Plan/PLANS
+   aqui: isso é exatamente a duplicação que deixou home, /planos e a
+   matriz de comparação dessincronizadas da última vez que os planos
+   mudaram. */
 
 /* ---------------------------------------------- CASES / RESULTADOS */
 export type Case = {

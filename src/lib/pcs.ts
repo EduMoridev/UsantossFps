@@ -1,9 +1,14 @@
 // src/lib/pcs.ts
 //
 // Configurações recomendadas. Cada peça carrega um termo de busca; os links das
-// lojas são gerados em src/lib/lojas.ts. Nenhum preço é fixo aqui de propósito —
-// o mercado de memória e SSD está em escassez global e qualquer número fechado
-// fica errado em semanas.
+// lojas são gerados em src/lib/lojas.ts.
+//
+// Faixas marcadas com baseFaixa: "estimado" são aproximações — memória RAM e
+// SSD/NAND atravessam uma escassez global que empurra preços para cima sem
+// aviso, e essas faixas ainda não foram confirmadas numa fonte de preço.
+// Elas PRECISAM ser confirmadas com o cliente antes de serem tratadas como
+// definitivas. Faixas "pesquisado" já foram confirmadas em fonte de preço;
+// "cliente" veio de valor informado pelo próprio cliente.
 //
 // CORREÇÕES TÉCNICAS APLICADAS EM RELAÇÃO ÀS LISTAS ORIGINAIS DO CLIENTE:
 //  1. Ryzen 3 3200G com placa A520M foi TROCADO por B450M. As placas A520 trazem
@@ -37,6 +42,8 @@ export interface Peca {
   /** Faixa aproximada em reais. 0 = ainda não pesquisado; o build falha assim. */
   faixaMin: number;
   faixaMax: number;
+  /** "pesquisado" = confirmado em fonte de preço; "estimado" = aproximação. */
+  baseFaixa: "pesquisado" | "estimado" | "cliente";
 }
 
 export interface Config {
@@ -52,10 +59,6 @@ export interface Config {
   naoEsperar: string[];
 }
 
-// TODO: PREENCHER TODAS as faixaMin/faixaMax antes de publicar.
-// O build deve falhar enquanto houver 0.
-const F = { faixaMin: 0, faixaMax: 0 };
-
 export const CONFIGS: Config[] = [
   {
     id: "entrada-esports",
@@ -63,14 +66,14 @@ export const CONFIGS: Config[] = [
     publico: "Quem joga Free Fire, Valorant e CS2 e não tem orçamento para placa de vídeo.",
     plataforma: "AMD",
     resolucaoAlvo: "1080p em configurações baixas, jogos competitivos",
-    verificadoEm: "2026-01-01", // TODO: atualizar ao preencher as faixas
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "AMD Ryzen 3 3200G", busca: "ryzen 3 3200g", observacao: "Vídeo integrado Vega 8; exige placa B450M", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe B450M", busca: "placa mae b450m", observacao: "NÃO use A520M: incompatível com o 3200G", ...F },
-      { categoria: "memoria", nome: "8 GB DDR4 (2x4 GB)", busca: "memoria ddr4 4gb 3200", observacao: "Dois pentes, não um. Canal duplo é essencial com vídeo integrado", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 256 GB", busca: "ssd nvme 256gb", ...F },
-      { categoria: "fonte", nome: "Fonte 450 W 80 Plus", busca: "fonte 450w 80 plus", observacao: "Não compre fonte sem certificação", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 3 fans", busca: "gabinete gamer 3 fans", ...F },
+      { categoria: "processador", nome: "AMD Ryzen 3 3200G", busca: "ryzen 3 3200g", observacao: "Vídeo integrado Vega 8; exige placa B450M", faixaMin: 450, faixaMax: 700, baseFaixa: "estimado" },
+      { categoria: "placa-mae", nome: "Placa-mãe B450M", busca: "placa mae b450m", observacao: "NÃO use A520M: incompatível com o 3200G", faixaMin: 400, faixaMax: 600, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "8 GB DDR4 (2x4 GB)", busca: "memoria ddr4 4gb 3200", observacao: "Dois pentes, não um. Canal duplo é essencial com vídeo integrado", faixaMin: 280, faixaMax: 500, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 256 GB", busca: "ssd nvme 256gb", faixaMin: 180, faixaMax: 320, baseFaixa: "estimado" },
+      { categoria: "fonte", nome: "Fonte 450 W 80 Plus", busca: "fonte 450w 80 plus", observacao: "Não compre fonte sem certificação", faixaMin: 250, faixaMax: 400, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 3 fans", busca: "gabinete gamer 3 fans", faixaMin: 200, faixaMax: 350, baseFaixa: "estimado" },
     ],
     esperar: ["Free Fire e Valorant fluidos em 1080p baixo", "Navegação e estudo sem travar"],
     naoEsperar: ["Jogos AAA", "Streaming enquanto joga", "Qualquer coisa acima de 1080p"],
@@ -81,14 +84,14 @@ export const CONFIGS: Config[] = [
     publico: "Mesmo perfil da anterior, com margem para mais abas abertas e upgrade futuro.",
     plataforma: "AMD",
     resolucaoAlvo: "1080p em jogos competitivos, com folga de memória",
-    verificadoEm: "2026-01-01",
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "AMD Ryzen 3 3200G", busca: "ryzen 3 3200g", observacao: "Exige placa B450M", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe B450M", busca: "placa mae b450m", ...F },
-      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 512 GB", busca: "ssd nvme 512gb", ...F },
-      { categoria: "fonte", nome: "Fonte 450 W 80 Plus", busca: "fonte 450w 80 plus", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 3 fans", busca: "gabinete gamer 3 fans", ...F },
+      { categoria: "processador", nome: "AMD Ryzen 3 3200G", busca: "ryzen 3 3200g", observacao: "Exige placa B450M", faixaMin: 450, faixaMax: 700, baseFaixa: "estimado" },
+      { categoria: "placa-mae", nome: "Placa-mãe B450M", busca: "placa mae b450m", faixaMin: 400, faixaMax: 600, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", faixaMin: 650, faixaMax: 1100, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 512 GB", busca: "ssd nvme 512gb", faixaMin: 300, faixaMax: 550, baseFaixa: "estimado" },
+      { categoria: "fonte", nome: "Fonte 450 W 80 Plus", busca: "fonte 450w 80 plus", faixaMin: 250, faixaMax: 400, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 3 fans", busca: "gabinete gamer 3 fans", faixaMin: 200, faixaMax: 350, baseFaixa: "estimado" },
     ],
     esperar: ["Competitivos fluidos", "Espaço para vários jogos instalados", "Caminho aberto para adicionar placa de vídeo depois"],
     naoEsperar: ["Jogos AAA", "1440p"],
@@ -99,14 +102,14 @@ export const CONFIGS: Config[] = [
     publico: "Quem quer processador melhor agora e placa de vídeo depois.",
     plataforma: "AMD",
     resolucaoAlvo: "1080p, com upgrade planejado",
-    verificadoEm: "2026-01-01",
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "AMD Ryzen 5 5600GT", busca: "ryzen 5 5600gt", observacao: "Pode exigir atualização de BIOS em placas A520 antigas", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe A520M ou B550M", busca: "placa mae b550m", observacao: "B550M custa mais e libera PCIe 4.0 para upgrade futuro", ...F },
-      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 512 GB", busca: "ssd nvme 512gb", ...F },
-      { categoria: "fonte", nome: "Fonte 500 W 80 Plus", busca: "fonte 500w 80 plus", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 3 fans", busca: "gabinete gamer 3 fans", ...F },
+      { categoria: "processador", nome: "AMD Ryzen 5 5600GT", busca: "ryzen 5 5600gt", observacao: "Pode exigir atualização de BIOS em placas A520 antigas", faixaMin: 800, faixaMax: 1200, baseFaixa: "estimado" },
+      { categoria: "placa-mae", nome: "Placa-mãe A520M ou B550M", busca: "placa mae b550m", observacao: "B550M custa mais e libera PCIe 4.0 para upgrade futuro", faixaMin: 650, faixaMax: 950, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", faixaMin: 650, faixaMax: 1100, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 512 GB", busca: "ssd nvme 512gb", faixaMin: 300, faixaMax: 550, baseFaixa: "estimado" },
+      { categoria: "fonte", nome: "Fonte 500 W 80 Plus", busca: "fonte 500w 80 plus", faixaMin: 280, faixaMax: 450, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 3 fans", busca: "gabinete gamer 3 fans", faixaMin: 200, faixaMax: 350, baseFaixa: "estimado" },
     ],
     esperar: ["Competitivos com folga", "Bom desempenho fora dos jogos"],
     naoEsperar: ["Jogos AAA sem placa de vídeo dedicada"],
@@ -117,15 +120,15 @@ export const CONFIGS: Config[] = [
     publico: "Quem quer jogar de tudo em 1080p sem gastar além do necessário.",
     plataforma: "AMD",
     resolucaoAlvo: "1080p em configurações altas",
-    verificadoEm: "2026-01-01",
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "AMD Ryzen 5 5600", busca: "ryzen 5 5600", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe B550M", busca: "placa mae b550m", ...F },
-      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", ...F },
-      { categoria: "placa-video", nome: "Placa de vídeo intermediária", busca: "rtx 4060", observacao: "REVISAR: comparar com a geração atual antes de publicar", ...F },
-      { categoria: "fonte", nome: "Fonte 600 W 80 Plus", busca: "fonte 600w 80 plus", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", ...F },
+      { categoria: "processador", nome: "AMD Ryzen 5 5600", busca: "ryzen 5 5600", faixaMin: 750, faixaMax: 1150, baseFaixa: "pesquisado" },
+      { categoria: "placa-mae", nome: "Placa-mãe B550M", busca: "placa mae b550m", faixaMin: 650, faixaMax: 950, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", faixaMin: 650, faixaMax: 1100, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", faixaMin: 500, faixaMax: 900, baseFaixa: "estimado" },
+      { categoria: "placa-video", nome: "Placa de vídeo intermediária", busca: "rtx 4060", observacao: "REVISAR: comparar com a geração atual antes de publicar", faixaMin: 1900, faixaMax: 2700, baseFaixa: "pesquisado" },
+      { categoria: "fonte", nome: "Fonte 600 W 80 Plus", busca: "fonte 600w 80 plus", faixaMin: 350, faixaMax: 550, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", faixaMin: 300, faixaMax: 500, baseFaixa: "estimado" },
     ],
     esperar: ["Jogos atuais em 1080p alto", "Streaming leve"],
     naoEsperar: ["4K", "Ray tracing pesado"],
@@ -136,15 +139,15 @@ export const CONFIGS: Config[] = [
     publico: "Mesma proposta da versão AMD, para quem prefere Intel.",
     plataforma: "Intel",
     resolucaoAlvo: "1080p em configurações altas",
-    verificadoEm: "2026-01-01",
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "Intel Core i5-12400F", busca: "i5 12400f", observacao: "Sem vídeo integrado: depende da placa de vídeo", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe H610M", busca: "placa mae h610m", observacao: "H610 limita a memória a 3200 MHz", ...F },
-      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", ...F },
-      { categoria: "placa-video", nome: "Placa de vídeo intermediária", busca: "rtx 4060", observacao: "REVISAR: comparar com a geração atual", ...F },
-      { categoria: "fonte", nome: "Fonte 600 W 80 Plus", busca: "fonte 600w 80 plus", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", ...F },
+      { categoria: "processador", nome: "Intel Core i5-12400F", busca: "i5 12400f", observacao: "Sem vídeo integrado: depende da placa de vídeo", faixaMin: 700, faixaMax: 1100, baseFaixa: "estimado" },
+      { categoria: "placa-mae", nome: "Placa-mãe H610M", busca: "placa mae h610m", observacao: "H610 limita a memória a 3200 MHz", faixaMin: 500, faixaMax: 800, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "16 GB DDR4 (2x8 GB)", busca: "memoria ddr4 2x8gb 3200", faixaMin: 650, faixaMax: 1100, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", faixaMin: 500, faixaMax: 900, baseFaixa: "estimado" },
+      { categoria: "placa-video", nome: "Placa de vídeo intermediária", busca: "rtx 4060", observacao: "REVISAR: comparar com a geração atual", faixaMin: 1900, faixaMax: 2700, baseFaixa: "pesquisado" },
+      { categoria: "fonte", nome: "Fonte 600 W 80 Plus", busca: "fonte 600w 80 plus", faixaMin: 350, faixaMax: 550, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", faixaMin: 300, faixaMax: 500, baseFaixa: "estimado" },
     ],
     esperar: ["Jogos atuais em 1080p alto"],
     naoEsperar: ["Funcionar sem placa de vídeo — o 12400F não tem vídeo integrado"],
@@ -155,15 +158,15 @@ export const CONFIGS: Config[] = [
     publico: "Quem joga competitivo em alta taxa de quadros ou transmite.",
     plataforma: "AMD",
     resolucaoAlvo: "1080p em alta taxa de quadros, 1440p em configurações altas",
-    verificadoEm: "2026-01-01",
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "AMD Ryzen 5 5600", busca: "ryzen 5 5600", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe B550M", busca: "placa mae b550m", ...F },
-      { categoria: "memoria", nome: "32 GB DDR4 (2x16 GB)", busca: "memoria ddr4 2x16gb 3200", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", ...F },
-      { categoria: "placa-video", nome: "Placa de vídeo superior", busca: "rtx 4060 ti", observacao: "REVISAR: comparar com a geração atual", ...F },
-      { categoria: "fonte", nome: "Fonte 650 W 80 Plus", busca: "fonte 650w 80 plus", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", ...F },
+      { categoria: "processador", nome: "AMD Ryzen 5 5600", busca: "ryzen 5 5600", faixaMin: 750, faixaMax: 1150, baseFaixa: "pesquisado" },
+      { categoria: "placa-mae", nome: "Placa-mãe B550M", busca: "placa mae b550m", faixaMin: 650, faixaMax: 950, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "32 GB DDR4 (2x16 GB)", busca: "memoria ddr4 2x16gb 3200", faixaMin: 1300, faixaMax: 2200, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", faixaMin: 500, faixaMax: 900, baseFaixa: "estimado" },
+      { categoria: "placa-video", nome: "Placa de vídeo superior", busca: "rtx 4060 ti", observacao: "REVISAR: comparar com a geração atual", faixaMin: 2800, faixaMax: 3800, baseFaixa: "estimado" },
+      { categoria: "fonte", nome: "Fonte 650 W 80 Plus", busca: "fonte 650w 80 plus", faixaMin: 400, faixaMax: 650, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", faixaMin: 300, faixaMax: 500, baseFaixa: "estimado" },
     ],
     esperar: ["Alta taxa de quadros em competitivos", "1440p em jogos atuais", "Transmissão sem perda perceptível"],
     naoEsperar: ["4K com tudo no máximo"],
@@ -174,15 +177,15 @@ export const CONFIGS: Config[] = [
     publico: "Mesma proposta da versão AMD, para quem prefere Intel.",
     plataforma: "Intel",
     resolucaoAlvo: "1080p em alta taxa de quadros, 1440p em configurações altas",
-    verificadoEm: "2026-01-01",
+    verificadoEm: "2026-09-19",
     pecas: [
-      { categoria: "processador", nome: "Intel Core i5-12400F", busca: "i5 12400f", observacao: "Sem vídeo integrado", ...F },
-      { categoria: "placa-mae", nome: "Placa-mãe H610M", busca: "placa mae h610m", ...F },
-      { categoria: "memoria", nome: "32 GB DDR4 (2x16 GB)", busca: "memoria ddr4 2x16gb 3200", ...F },
-      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", ...F },
-      { categoria: "placa-video", nome: "Placa de vídeo superior", busca: "rtx 4060 ti", observacao: "REVISAR: comparar com a geração atual", ...F },
-      { categoria: "fonte", nome: "Fonte 650 W 80 Plus", busca: "fonte 650w 80 plus", ...F },
-      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", ...F },
+      { categoria: "processador", nome: "Intel Core i5-12400F", busca: "i5 12400f", observacao: "Sem vídeo integrado", faixaMin: 700, faixaMax: 1100, baseFaixa: "estimado" },
+      { categoria: "placa-mae", nome: "Placa-mãe H610M", busca: "placa mae h610m", faixaMin: 500, faixaMax: 800, baseFaixa: "estimado" },
+      { categoria: "memoria", nome: "32 GB DDR4 (2x16 GB)", busca: "memoria ddr4 2x16gb 3200", faixaMin: 1300, faixaMax: 2200, baseFaixa: "estimado" },
+      { categoria: "armazenamento", nome: "SSD NVMe 1 TB", busca: "ssd nvme 1tb", faixaMin: 500, faixaMax: 900, baseFaixa: "estimado" },
+      { categoria: "placa-video", nome: "Placa de vídeo superior", busca: "rtx 4060 ti", observacao: "REVISAR: comparar com a geração atual", faixaMin: 2800, faixaMax: 3800, baseFaixa: "estimado" },
+      { categoria: "fonte", nome: "Fonte 650 W 80 Plus", busca: "fonte 650w 80 plus", faixaMin: 400, faixaMax: 650, baseFaixa: "estimado" },
+      { categoria: "gabinete", nome: "Gabinete com 4 fans", busca: "gabinete gamer 4 fans", faixaMin: 300, faixaMax: 500, baseFaixa: "estimado" },
     ],
     esperar: ["Alta taxa de quadros em competitivos", "1440p em jogos atuais"],
     naoEsperar: ["4K com tudo no máximo"],

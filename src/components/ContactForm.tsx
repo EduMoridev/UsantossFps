@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CONTACT, PLANS, GAMES, GAME_SUGGESTIONS } from "@/lib/site";
+import { CONTACT, GAMES, GAME_SUGGESTIONS } from "@/lib/site";
+import { PLANOS } from "@/lib/planos";
 import { CPU_OPTIONS, GPU_OPTIONS, RAM_OPTIONS, MOBO_OPTIONS } from "@/lib/hardware";
 import { Icon } from "./Icon";
 import { Combobox } from "./ui/combobox";
@@ -24,9 +25,15 @@ const inputCls =
 
 const labelCls = "mb-2 block text-[0.8125rem] font-medium text-ink-2";
 
+function formatBRL(valor: number) {
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+const PLANO_PADRAO = PLANOS.find((p) => p.destaque)?.nome ?? PLANOS[0].nome;
+
 export function ContactForm() {
   const [v, setV] = useState<Record<string, string>>({
-    plano: PLANS[1].name,
+    plano: PLANO_PADRAO,
     jogo: GAMES[0],
   });
   const set = (k: string, val: string) => setV((s) => ({ ...s, [k]: val }));
@@ -121,9 +128,9 @@ export function ContactForm() {
               <SelectValue placeholder="Escolha um plano" />
             </SelectTrigger>
             <SelectContent>
-              {PLANS.map((p) => (
-                <SelectItem key={p.id} value={p.name}>
-                  {p.name} — {p.price}
+              {PLANOS.map((p) => (
+                <SelectItem key={p.id} value={p.nome}>
+                  {p.nome} — {formatBRL(p.preco)}
                 </SelectItem>
               ))}
               <SelectItem value="Ainda não sei">Ainda não sei</SelectItem>

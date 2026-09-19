@@ -1,15 +1,19 @@
 /* ============================================================
-   RASCUNHO — matriz de comparação de planos (usada na home).
-   Inclusões, prazos de suporte e duração ainda precisam ser
-   CONFIRMADOS COM O CLIENTE antes de publicar. Não tratar como
-   fonte definitiva sem revisão.
+   Matriz de comparação de planos (usada na home e em /planos).
+   Deriva de PLANOS (src/lib/planos.ts) em vez de redigitar nome,
+   preço ou item aqui — é exatamente essa duplicação que deixou a
+   estrutura antiga (Essencial/Competitivo/Elite) dessincronizada
+   entre a home, /planos e este arquivo. Cada linha é montada a
+   partir dos itens reais de cada plano: um plano "inclui" uma
+   linha quando o texto do item bate exatamente com o de outro
+   plano — não há inclusão implícita entre planos que não
+   compartilham o mesmo texto de item.
    ============================================================ */
+import { PLANOS, type Plano } from "./planos";
 
-export type PlanId = "essencial" | "competitivo" | "elite";
+export type PlanId = Plano["id"];
 
-/* string = valor exibido como texto (ex: "30 dias", "2 a 3 h");
-   boolean = célula de inclusão, renderizada como ícone. */
-export type ComparisonCell = boolean | string;
+export type ComparisonCell = boolean;
 
 export type ComparisonPlanColumn = {
   id: PlanId;
@@ -20,27 +24,30 @@ export type ComparisonPlanColumn = {
 
 export type ComparisonRow = {
   label: string;
-} & Record<PlanId, ComparisonCell>;
+  cells: Record<PlanId, ComparisonCell>;
+};
 
-export const COMPARISON_PLANS: ComparisonPlanColumn[] = [
-  { id: "essencial", name: "Essencial", price: "R$ 89" },
-  { id: "competitivo", name: "Competitivo", price: "R$ 169", featured: true },
-  { id: "elite", name: "Elite", price: "R$ 289" },
-];
+function formatBRL(valor: number) {
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
 
-export const COMPARISON_ROWS: ComparisonRow[] = [
-  { label: "Limpeza e otimização do Windows", essencial: true, competitivo: true, elite: true },
-  { label: "Serviços em segundo plano", essencial: true, competitivo: true, elite: true },
-  { label: "Plano de energia", essencial: true, competitivo: true, elite: true },
-  { label: "Atualização limpa de drivers", essencial: false, competitivo: true, elite: true },
-  { label: "Ajustes de BIOS e XMP/EXPO", essencial: false, competitivo: true, elite: true },
-  { label: "Otimização de rede e latência", essencial: false, competitivo: true, elite: true },
-  { label: "Tuning do jogo principal", essencial: false, competitivo: true, elite: true },
-  { label: "Cadeia de input lag e periféricos", essencial: false, competitivo: false, elite: true },
-  { label: "Undervolt e curva térmica", essencial: false, competitivo: false, elite: true },
-  { label: "Ajuste para transmissão", essencial: false, competitivo: false, elite: true },
-  { label: "Medição antes e depois", essencial: true, competitivo: true, elite: true },
-  { label: "Relatório de sessão", essencial: false, competitivo: true, elite: true },
-  { label: "Suporte pós-atendimento", essencial: "7 dias", competitivo: "30 dias", elite: "60 dias" },
-  { label: "Duração", essencial: "60 a 90 min", competitivo: "2 a 3 h", elite: "4 a 6 h" },
-];
+export const COMPARISON_PLANS: ComparisonPlanColumn[] = PLANOS.map((p) => ({
+  id: p.id,
+  name: p.nome,
+  price: formatBRL(p.preco),
+  featured: !!p.destaque,
+}));
+
+const FEATURE_ORDER: string[] = [];
+for (const p of PLANOS) {
+  for (const item of p.itens) {
+    if (!FEATURE_ORDER.includes(item)) FEATURE_ORDER.push(item);
+  }
+}
+
+export const COMPARISON_ROWS: ComparisonRow[] = FEATURE_ORDER.map((label) => ({
+  label,
+  cells: Object.fromEntries(
+    PLANOS.map((p) => [p.id, p.itens.includes(label)]),
+  ) as Record<PlanId, ComparisonCell>,
+}));

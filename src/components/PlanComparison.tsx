@@ -20,6 +20,93 @@ function CellValue({ value }: { value: ComparisonCell }) {
   );
 }
 
+/* Tabela + blocos mobile puros, sem o <details> — reaproveitado tanto
+   pela versão colapsada da home (PlanComparison, abaixo) quanto pela
+   versão sempre aberta de /planos, para as duas nunca divergirem entre
+   si nem da estrutura real de PLANOS. */
+export function ComparisonTable() {
+  return (
+    <>
+      {/* Desktop / tablet: tabela. Abaixo de 768px vira blocos — nunca rolagem horizontal. */}
+      <div className="hidden overflow-hidden rounded-lg border border-line md:block">
+        <table className="plan-compare-table w-full border-collapse text-left text-sm">
+          <caption className="sr-only">
+            Comparação detalhada entre os planos {COMPARISON_PLANS.map((p) => p.name).join(", ")}
+          </caption>
+          <thead>
+            <tr className="border-b border-line bg-surface-2">
+              <th
+                scope="col"
+                className="px-5 py-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-3"
+              >
+                Recurso
+              </th>
+              {COMPARISON_PLANS.map((p) => (
+                <th
+                  key={p.id}
+                  scope="col"
+                  className={`px-5 py-4 text-center ${p.featured ? "plan-compare-featured" : ""}`}
+                >
+                  <div className={`font-display text-base ${p.featured ? "font-semibold text-ink" : "font-medium text-ink-2"}`}>
+                    {p.name}
+                  </div>
+                  <div className="mt-0.5 font-mono text-xs tabular-nums text-ink-3">{p.price}</div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {COMPARISON_ROWS.map((row, i) => (
+              <tr key={row.label} style={{ "--i": i } as CSSProperties}>
+                <th scope="row" className="border-b border-line-soft px-5 py-3.5 text-left text-[0.9375rem] font-normal text-ink-2">
+                  {row.label}
+                </th>
+                {COMPARISON_PLANS.map((p) => (
+                  <td
+                    key={p.id}
+                    className={`border-b border-line-soft px-5 py-3.5 text-center text-[0.9375rem] tabular-nums ${
+                      p.featured ? "plan-compare-featured font-semibold text-ink" : "text-ink-2"
+                    }`}
+                  >
+                    <CellValue value={row.cells[p.id]} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile: um bloco por plano, empilhados */}
+      <div className="grid gap-5 md:hidden">
+        {COMPARISON_PLANS.map((p) => (
+          <div
+            key={p.id}
+            className={`rounded-lg border p-5 ${p.featured ? "border-accent/45" : "border-line"}`}
+          >
+            <div className="flex items-baseline justify-between border-b border-line-soft pb-3">
+              <h3 className={`font-display ${p.featured ? "font-semibold text-ink" : "font-medium text-ink-2"}`}>
+                {p.name}
+              </h3>
+              <span className="font-display text-lg tabular-nums text-ink">{p.price}</span>
+            </div>
+            <dl className="mt-4 grid gap-3">
+              {COMPARISON_ROWS.map((row) => (
+                <div key={row.label} className="flex items-center justify-between gap-4 text-sm">
+                  <dt className="text-ink-2">{row.label}</dt>
+                  <dd className="flex shrink-0 items-center gap-1.5 font-medium tabular-nums text-ink">
+                    <CellValue value={row.cells[p.id]} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
 /* Substitui o antigo link "Comparar em detalhe" (que levava pra
    /planos e não mostrava nada aqui). <details>/<summary> nativo:
    abre, fecha e anima só com CSS (classes .plan-compare* em
@@ -34,82 +121,7 @@ export function PlanComparison() {
       </summary>
 
       <div className="plan-compare-body">
-        {/* Desktop / tablet: tabela. Abaixo de 768px vira blocos — nunca rolagem horizontal. */}
-        <div className="hidden overflow-hidden rounded-lg border border-line md:block">
-          <table className="plan-compare-table w-full border-collapse text-left text-sm">
-            <caption className="sr-only">
-              Comparação detalhada entre os planos Essencial, Competitivo e Elite
-            </caption>
-            <thead>
-              <tr className="border-b border-line bg-surface-2">
-                <th
-                  scope="col"
-                  className="px-5 py-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-3"
-                >
-                  Recurso
-                </th>
-                {COMPARISON_PLANS.map((p) => (
-                  <th
-                    key={p.id}
-                    scope="col"
-                    className={`px-5 py-4 text-center ${p.featured ? "plan-compare-featured" : ""}`}
-                  >
-                    <div className={`font-display text-base ${p.featured ? "font-semibold text-ink" : "font-medium text-ink-2"}`}>
-                      {p.name}
-                    </div>
-                    <div className="mt-0.5 font-mono text-xs tabular-nums text-ink-3">{p.price}</div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {COMPARISON_ROWS.map((row, i) => (
-                <tr key={row.label} style={{ "--i": i } as CSSProperties}>
-                  <th scope="row" className="border-b border-line-soft px-5 py-3.5 text-left text-[0.9375rem] font-normal text-ink-2">
-                    {row.label}
-                  </th>
-                  {COMPARISON_PLANS.map((p) => (
-                    <td
-                      key={p.id}
-                      className={`border-b border-line-soft px-5 py-3.5 text-center text-[0.9375rem] tabular-nums ${
-                        p.featured ? "plan-compare-featured font-semibold text-ink" : "text-ink-2"
-                      }`}
-                    >
-                      <CellValue value={row[p.id]} />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Mobile: um bloco por plano, empilhados */}
-        <div className="grid gap-5 md:hidden">
-          {COMPARISON_PLANS.map((p) => (
-            <div
-              key={p.id}
-              className={`rounded-lg border p-5 ${p.featured ? "border-accent/45" : "border-line"}`}
-            >
-              <div className="flex items-baseline justify-between border-b border-line-soft pb-3">
-                <h3 className={`font-display ${p.featured ? "font-semibold text-ink" : "font-medium text-ink-2"}`}>
-                  {p.name}
-                </h3>
-                <span className="font-display text-lg tabular-nums text-ink">{p.price}</span>
-              </div>
-              <dl className="mt-4 grid gap-3">
-                {COMPARISON_ROWS.map((row) => (
-                  <div key={row.label} className="flex items-center justify-between gap-4 text-sm">
-                    <dt className="text-ink-2">{row.label}</dt>
-                    <dd className="flex shrink-0 items-center gap-1.5 font-medium tabular-nums text-ink">
-                      <CellValue value={row[p.id]} />
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          ))}
-        </div>
+        <ComparisonTable />
       </div>
     </details>
   );

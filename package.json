@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/build-scripts-manifest.mjs && node --experimental-strip-types scripts/check-pcs.mjs",
+    "prebuild": "node scripts/build-scripts-manifest.mjs && node --experimental-strip-types scripts/check-pcs.mjs && node --experimental-strip-types scripts/check-servicos.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "scripts:manifest": "node scripts/build-scripts-manifest.mjs",
-    "check:pcs": "node --experimental-strip-types scripts/check-pcs.mjs"
+    "check:pcs": "node --experimental-strip-types scripts/check-pcs.mjs",
+    "check:servicos": "node --experimental-strip-types scripts/check-servicos.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

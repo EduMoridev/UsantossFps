@@ -45,11 +45,13 @@ const CONFIGS_COM_META = CONFIGS.map((c) => {
     ...p,
     semFaixa: p.faixaMin === 0 || p.faixaMax === 0,
   }));
+  const estimadas = pecas.filter((p) => p.baseFaixa === "estimado").length;
   return {
     ...c,
     pecas,
     desatualizado: diasDesdeVerificacao > DIAS_LIMITE,
     investimentoOmitido: pecas.some((p) => p.semFaixa),
+    maioriaEstimada: estimadas > pecas.length / 2,
   };
 });
 
@@ -164,6 +166,10 @@ export default function GratisPcsPage() {
 
       <div className="container-fl pb-14 md:pb-20">
         <PcsExplorer configs={CONFIGS_COM_META} />
+        <p className="mt-8 text-[0.75rem] leading-relaxed text-ink-3">
+          <span aria-hidden="true">*</span> faixa estimada — aproximação ainda não confirmada em
+          fonte de preço; peças sem o marcador já foram pesquisadas.
+        </p>
       </div>
 
       <Section tone="raised">

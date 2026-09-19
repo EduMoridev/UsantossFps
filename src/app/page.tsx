@@ -1,8 +1,9 @@
 import Link from "next/link";
 import {
-  BRAND, CONTACT, HERO_STATS, SERVICES, PLANS, PROCESS_STEPS, CASES,
+  BRAND, CONTACT, HERO_STATS, SERVICES, PROCESS_STEPS, CASES,
 } from "@/lib/site";
-import { Button, Badge, Section, SectionHead, Eyebrow, StatBlock } from "@/components/UI";
+import { PLANOS, PERIODO_PAGAMENTO } from "@/lib/planos";
+import { Button, Badge, CheckList, Section, SectionHead, Eyebrow, StatBlock } from "@/components/UI";
 import { Icon } from "@/components/Icon";
 import { Reveal } from "@/components/Reveal";
 import { DeltaBars, FrametimeChart } from "@/components/Chart";
@@ -12,6 +13,11 @@ import {
 import { FAQHome } from "@/components/FAQHome";
 import { PlanComparison } from "@/components/PlanComparison";
 import { TestimonialsMarquee } from "@/components/TestimonialsMarquee";
+import { NaoCliqueButton } from "@/components/NaoCliqueButton";
+
+function formatBRL(valor: number) {
+  return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
 
 export default function Home() {
   const hero = CASES[0];
@@ -229,39 +235,51 @@ export default function Home() {
       </Section>
 
       {/* ============================================ PLANOS RESUMO */}
-      <Section tone="raised">
+      <Section tone="raised" id="planos">
         <SectionHead
           eyebrow="planos"
-          title="Três pacotes. Sem letra miúda."
+          title="Quatro pacotes. Sem letra miúda."
           lead="Preço fechado antes de começar. Se no diagnóstico o ganho não justificar, eu falo."
         />
-        <div className="grid gap-4 md:grid-cols-3">
-          {PLANS.map((p, i) => (
-            <Reveal key={p.id} delay={i * 60} dir={i % 2 === 0 ? "left" : "right"}>
-              <div
-                className={`card card-hover flex h-full flex-col gap-5 p-7 ${
-                  p.featured
-                    ? "glass-strong !border-accent/45 shadow-[0_20px_60px_-30px_rgba(34,197,94,0.5)]"
-                    : ""
-                }`}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display text-lg font-semibold">{p.name}</h3>
-                  {p.badge && <Badge tone="accent">{p.badge}</Badge>}
-                </div>
-                <div>
-                  <div className="font-display text-[2.25rem] leading-none tracking-[-0.035em] text-ink">
-                    {p.price}
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {PLANOS.map((p, i) => {
+            const tag = p.destaque ?? p.badge;
+            return (
+              <Reveal key={p.id} delay={i * 60} dir={i % 2 === 0 ? "left" : "right"}>
+                <div
+                  className={`card card-hover flex h-full flex-col gap-5 p-6 ${
+                    p.destaque
+                      ? "glass-strong !border-accent/45 shadow-[0_20px_60px_-30px_rgba(34,197,94,0.5)]"
+                      : ""
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-display text-lg font-semibold">{p.nome}</h3>
+                    {tag && <Badge tone="accent">{tag}</Badge>}
                   </div>
-                  <div className="mt-1.5 text-xs text-ink-3">{p.period} · {p.duration}</div>
+                  <div>
+                    <div className="flex flex-wrap items-baseline gap-x-2">
+                      {p.precoAnterior && (
+                        <span className="text-sm text-ink-3 line-through decoration-line">
+                          {formatBRL(p.precoAnterior)}
+                        </span>
+                      )}
+                      <span className="font-display text-[2.25rem] leading-none tracking-[-0.035em] text-ink">
+                        {formatBRL(p.preco)}
+                      </span>
+                    </div>
+                    <div className="mt-1.5 text-xs text-ink-3">{PERIODO_PAGAMENTO}</div>
+                  </div>
+                  <div className="flex-1">
+                    <CheckList items={p.itens.slice(0, 4)} dense />
+                  </div>
+                  <Button href="/planos" variant={p.destaque ? "primary" : "ghost"} icon="arrow">
+                    Ver plano
+                  </Button>
                 </div>
-                <p className="flex-1 text-[0.9375rem] leading-relaxed text-ink-2">{p.pitch}</p>
-                <Button href="/planos" variant={p.featured ? "primary" : "ghost"} icon="arrow">
-                  {p.cta}
-                </Button>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
 
         <PlanComparison />
@@ -304,6 +322,11 @@ export default function Home() {
       <FAQHome />
 
       <CTABand />
+
+      {/* Easter egg — discreto, depois de todo o conteúdo sério da home. */}
+      <div className="flex justify-center pb-10">
+        <NaoCliqueButton />
+      </div>
     </>
   );
 }

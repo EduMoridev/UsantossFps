@@ -9,7 +9,7 @@ import { Icon } from "./Icon";
 const FAQS = [
   {
     q: "Perco a garantia do meu PC?",
-    a: "Não. Todos os ajustes são de software e de perfis que o próprio fabricante disponibiliza, como XMP/EXPO e curva de energia. Nada é físico e nada é irreversível. Se em algum caso específico houver risco, eu aviso antes de tocar.",
+    a: "Não, nos planos Start FPS, Not Extreme e Advanced FPS: todos os ajustes são de software e de perfis que o próprio fabricante disponibiliza, como XMP/EXPO e curva de energia — nada físico, nada irreversível. A exceção é o Pro Experience, que inclui overclock de processador e de placa de vídeo: é opcional, e eu explico o processo e os riscos numa chamada antes de aplicar qualquer coisa.",
   },
   {
     q: "Meus arquivos correm algum risco?",
@@ -18,10 +18,6 @@ const FAQS = [
   {
     q: "Por que não tem risco de ban?",
     a: "Nenhuma alteração toca em arquivo de jogo nem injeta processo dentro dele. O que muda é configuração do sistema, driver, energia e rede — coisas que o anticheat não considera modificação do cliente.",
-  },
-  {
-    q: "Quanto tempo dura cada atendimento?",
-    a: "Essencial leva de 60 a 90 minutos, Competitivo de 2 a 3 horas e Elite de 4 a 6 horas, que podem ser divididas em duas sessões. O horário é escolhido por você.",
   },
   {
     q: "Funciona em notebook?",

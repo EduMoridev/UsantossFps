@@ -17,6 +17,7 @@ type ConfigComMeta = Omit<Config, "pecas"> & {
   pecas: PecaComMeta[];
   desatualizado: boolean;
   investimentoOmitido: boolean;
+  maioriaEstimada: boolean;
 };
 
 const CATEGORIA_LABEL: Record<CategoriaPeca, string> = {
@@ -112,6 +113,11 @@ function PecaRow({ peca }: { peca: PecaComMeta }) {
           }`}
         >
           {peca.semFaixa ? "faixa não pesquisada" : formatFaixa(peca.faixaMin, peca.faixaMax)}
+          {!peca.semFaixa && peca.baseFaixa === "estimado" && (
+            <sup title="faixa estimada" aria-label="faixa estimada" className="ml-0.5 text-ink-3">
+              *
+            </sup>
+          )}
         </span>
       </div>
 
@@ -182,7 +188,8 @@ function ConfigCard({ config }: { config: ConfigComMeta }) {
       <div className="border-t border-line-soft pt-5">
         {!config.investimentoOmitido && (
           <div className="text-[0.9375rem] font-semibold text-ink">
-            Investimento aproximado: {formatFaixa(total.min, total.max)}
+            Investimento aproximado: {config.maioriaEstimada && "estimativa: "}
+            {formatFaixa(total.min, total.max)}
           </div>
         )}
         <div className={`text-[0.75rem] text-ink-3 ${config.investimentoOmitido ? "" : "mt-1"}`}>
