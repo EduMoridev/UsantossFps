@@ -13,6 +13,7 @@ const nextConfig = {
       "motion",
       "fuse.js",
       "cmdk",
+      "lucide-react",
     ],
   },
   // `STATIC_EXPORT=1 npm run build` gera um site estático em ./out

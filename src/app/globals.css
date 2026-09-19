@@ -506,6 +506,212 @@
   transform: rotate(180deg);
 }
 
+/* ============================================================
+   SCRIPTS GRÁTIS (/gratis/scripts)
+   ============================================================ */
+
+/* "Ver o código" — mesma técnica do FAQ da home: ::details-content
+   é o pseudo-elemento que o navegador já gera pro conteúdo depois
+   do <summary>; anima via grid-template-rows (0fr → 1fr) porque
+   height:auto não é animável. Classes próprias (não .faq-item)
+   porque aqui cada card abre/fecha de forma independente, sem o
+   agrupamento em acordeão exclusivo que o FAQ usa. */
+.script-code::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.script-code[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .script-code::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .script-code[open]::details-content { height: auto; }
+}
+.script-code-body {
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 0.875rem;
+}
+.script-code-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.script-code[open] .script-code-icon {
+  transform: rotate(180deg);
+}
+.script-code > summary {
+  transition: color 160ms ease;
+}
+.script-code > summary:hover {
+  color: var(--color-accent);
+}
+
+/* Brilho verde percorrendo a borda do card no hover — único efeito
+   novo desta seção. Gradiente mascarado para só a borda (técnica de
+   "gradient border"); a transição é de background-position, não um
+   keyframe em loop. Estado padrão é opacity:0 neste ::after
+   decorativo, nunca no conteúdo real do card. */
+.script-card {
+  position: relative;
+  isolation: isolate;
+}
+.script-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    var(--color-accent) 48%,
+    var(--color-accent-soft) 52%,
+    transparent 70%
+  );
+  background-size: 260% 260%;
+  background-position: -120% -120%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease, background-position 900ms var(--ease-out-fast);
+}
+.script-card:hover::after,
+.script-card:focus-within::after {
+  opacity: 1;
+  background-position: 120% 120%;
+}
+
+/* ============================================================
+   FERRAMENTAS (/gratis/ferramentas) — "Como usar" / "Cuidado": mesma
+   técnica de ::details-content do FAQ da home (grid-template-rows
+   0fr → 1fr, porque height:auto não é animável). Classe própria
+   porque cada card tem dois <details> independentes, sem o
+   agrupamento em acordeão exclusivo do FAQ.
+   ============================================================ */
+.tool-detail::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.tool-detail[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .tool-detail::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .tool-detail[open]::details-content { height: auto; }
+}
+/* Sem isso, o grid item (o único filho do ::details-content) não
+   encolhe abaixo do min-content — grid-template-rows: 0fr não colapsa
+   de verdade e sobra espaço fantasma com o acordeão fechado. Mesma
+   regra que .faq-item-body já aplica no FAQ da home. */
+.tool-detail-body {
+  min-height: 0;
+  overflow: hidden;
+}
+.tool-detail-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.tool-detail[open] .tool-detail-icon {
+  transform: rotate(180deg);
+}
+.tool-detail > summary {
+  transition: color 160ms ease;
+}
+.tool-detail > summary:hover {
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   MONTAGENS (/gratis/pcs) — "Onde comprar" no mobile: mesma técnica
+   de ::details-content do FAQ e do .tool-detail acima. Classe própria
+   porque cada peça tem seu próprio <details>, sem acordeão exclusivo.
+   ============================================================ */
+.pc-links::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.pc-links[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .pc-links::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .pc-links[open]::details-content { height: auto; }
+}
+.pc-links-body {
+  min-height: 0;
+  overflow: hidden;
+}
+.pc-links-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.pc-links[open] .pc-links-icon {
+  transform: rotate(180deg);
+}
+.pc-links > summary {
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.pc-links > summary:hover {
+  color: var(--color-accent);
+  border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+}
+
+/* Crossfade do card ao trocar AMD/Intel — a chave (key) que muda em
+   PcsExplorer força o remount que dispara esta entrada. O estado final
+   (100%) é sempre opacidade 1, então mesmo sem suporte a animação o
+   card fica visível. */
+@keyframes fl-card-switch {
+  from { opacity: 0.4; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.pc-card-switch {
+  animation: fl-card-switch 320ms var(--ease-out-fast);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -523,7 +729,19 @@
   .testimonials-track *,
   .testimonials-expand,
   .testimonials-expand *,
-  .testimonials-expand::details-content {
+  .testimonials-expand::details-content,
+  .script-code,
+  .script-code *,
+  .script-code::details-content,
+  .tool-detail,
+  .tool-detail *,
+  .tool-detail::details-content,
+  .pc-links,
+  .pc-links *,
+  .pc-links::details-content {
     transition-duration: 0.01ms !important;
+  }
+  .script-card::after {
+    display: none;
   }
 }

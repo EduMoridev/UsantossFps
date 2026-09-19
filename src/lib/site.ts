@@ -32,6 +32,7 @@ export const NAV = [
   { label: "Resultados", href: "/resultados" },
   { label: "Como funciona", href: "/como-funciona" },
   { label: "Blog", href: "/blog" },
+  { label: "Grátis", href: "/gratis" },
 ];
 
 export const FOOTER_NAV = [
