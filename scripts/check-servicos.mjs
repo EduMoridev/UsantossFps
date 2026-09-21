@@ -1,7 +1,10 @@
 // Verificação de preço e descrição dos serviços avulsos (/servicos) — roda
 // no prebuild (ver package.json), nunca no cliente. Falha o build (exit 1)
-// se sobrar preco igual a 0 ou descricao vazia em src/lib/servicos.ts,
-// listando id e nome de cada um.
+// se sobrar preco igual a 0, ou descricao vazia em um serviço sem
+// descricaoPendente, em src/lib/servicos.ts, listando id e nome de cada um.
+// Serviço com descricaoPendente: true pode ficar com descricao vazia — só
+// gera um aviso (console.warn), para não ser esquecido, mas não falha o
+// build nem impede a publicação em /servicos.
 //
 // Importa SERVICOS direto do .ts fonte via o type-stripping nativo do
 // próprio Node (--experimental-strip-types, Node 22.6+) — mesma técnica de
@@ -15,13 +18,19 @@ const SERVICOS_FILE_REL = path.relative(ROOT, SERVICOS_FILE).split(path.sep).joi
 
 const { SERVICOS } = await import(pathToFileURL(SERVICOS_FILE).href);
 
+const descricaoPendenteIds = SERVICOS.filter(
+  (s) => s.descricaoPendente && s.descricao.trim() === "",
+).map((s) => s.id);
+
 const pendentes = SERVICOS.filter(
-  (s) => s.preco === 0 || s.descricao.trim() === "",
+  (s) =>
+    s.preco === 0 ||
+    (!s.descricaoPendente && s.descricao.trim() === ""),
 ).map((s) => ({
   id: s.id,
   nome: s.nome,
   faltaPreco: s.preco === 0,
-  faltaDescricao: s.descricao.trim() === "",
+  faltaDescricao: !s.descricaoPendente && s.descricao.trim() === "",
 }));
 
 if (pendentes.length > 0) {
@@ -42,6 +51,12 @@ if (pendentes.length > 0) {
   process.exit(1);
 }
 
+if (descricaoPendenteIds.length > 0) {
+  console.warn(
+    `[check-servicos] ${descricaoPendenteIds.length} serviço(s) com descrição pendente: ${descricaoPendenteIds.join(", ")}`,
+  );
+}
+
 console.log(
-  `[check-servicos] ${SERVICOS.length} serviço(s) em ${SERVICOS_FILE_REL}, todos com preço e descrição preenchidos.`,
+  `[check-servicos] ${SERVICOS.length} serviço(s) em ${SERVICOS_FILE_REL}, todos com preço preenchido.`,
 );

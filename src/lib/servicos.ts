@@ -15,8 +15,10 @@ export type Servico = {
   /** Preço em reais. 0 = ainda não definido; o build falha assim (scripts/check-servicos.mjs). */
   preco: number;
   categoria: "celular" | "avulso" | "curso";
-  /** 2 a 3 frases. Vazia = ainda não veio do cliente; o build falha assim. */
+  /** 2 a 3 frases. Vazia = ainda não veio do cliente; o build falha assim, a menos que descricaoPendente seja true. */
   descricao: string;
+  /** true = descrição vazia é esperada e não falha o build (aviso no lugar). Serviço continua publicado. */
+  descricaoPendente?: boolean;
   duracao?: string;
   observacao?: string;
 };
@@ -28,18 +30,20 @@ export const SERVICOS: Servico[] = [
     nome: "Otimização Básica (iOS)",
     preco: 19.9,
     categoria: "celular",
-    // TODO: descrição precisa vir do cliente. Propositalmente vazia — o
-    // build falha até isso ser preenchido (mesma regra do preço).
+    // TODO: descrição precisa vir do cliente. Publicado mesmo assim —
+    // descricaoPendente faz o build avisar em vez de falhar.
     descricao: "",
+    descricaoPendente: true,
   },
   {
     id: "ios-master",
     nome: "Otimização Master (iOS)",
     preco: 44.9,
     categoria: "celular",
-    // TODO: descrição precisa vir do cliente. Propositalmente vazia — o
-    // build falha até isso ser preenchido (mesma regra do preço).
+    // TODO: descrição precisa vir do cliente. Publicado mesmo assim —
+    // descricaoPendente faz o build avisar em vez de falhar.
     descricao: "",
+    descricaoPendente: true,
   },
   // ATENÇÃO: a oferta original incluía "ativação de Windows e Office". Não
   // anunciar ativação — a cópia abaixo deixa claro que a licença é do
