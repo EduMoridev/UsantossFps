@@ -2,7 +2,7 @@
 @import "@heroui/styles";
 
 /* ============================================================
-   UsantossFps — DESIGN TOKENS
+   UsantoosFps — DESIGN TOKENS
    Base escura neutra (zinc/stone) + 1 cor de acento (verde).
    ============================================================ */
 @theme {
@@ -65,7 +65,7 @@
 /* ============================================================
    HEROUI — mapeamento de tema
    O site é sempre escuro (sem alternância claro/escuro), então os
-   componentes HeroUI leem direto dos tokens UsantossFps acima — uma
+   componentes HeroUI leem direto dos tokens UsantoosFps acima — uma
    única fonte de verdade para cor em toda a UI, feita ou vinda da lib.
    ============================================================ */
 [data-theme="dark"] {

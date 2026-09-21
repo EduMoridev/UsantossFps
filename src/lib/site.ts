@@ -1,14 +1,14 @@
 /* ============================================================
-   UsantossFps — fonte única de conteúdo.
+   UsantoosFps — fonte única de conteúdo.
    Trocar marca, preços, contatos e cases aqui reflete no site inteiro.
    ============================================================ */
 
 export const BRAND = {
-  name: "UsantossFps",
-  nameParts: ["Usantoss", "Fps"] as const,
+  name: "UsantoosFps",
+  nameParts: ["Usantoos", "Fps"] as const,
   tagline: "Seu setup no máximo. Sem trocar uma peça.",
   short: "Engenharia de performance para PC gamer.",
-  legalName: "UsantossFps Otimização de Performance",
+  legalName: "UsantoosFps Otimização de Performance",
   cnpj: "00.000.000/0001-00",
 };
 
@@ -16,12 +16,12 @@ export const CONTACT = {
   whatsapp: "5511951422087",
   whatsappLabel: "(11) 95142-2087",
   whatsappUrl:
-    "https://wa.me/5511951422087?text=Fala!%20Quero%20otimizar%20meu%20PC%20com%20a%20UsantossFps.",
-  discord: "https://discord.com/invite/e9F3AsGDqW",
+    "https://wa.me/5511951422087?text=Fala!%20Quero%20otimizar%20meu%20PC%20com%20a%20UsantoosFps.",
+  discord: "https://discord.gg/usantoosfps",
   instagram: "https://instagram.com/usantoosfps",
   tiktok: "https://tiktok.com/@usantoosfps",
   youtube: "https://youtube.com/@usantoosfps",
-  email: "contato@usantossfps.gg",
+  email: "contato@usantoosfps.gg",
   responseTime: "Resposta média em 12 min",
   hours: "Seg a Sáb · 10h às 22h (BRT)",
 };
@@ -515,9 +515,6 @@ export type Testimonial = {
 };
 
 export const TESTIMONIALS: Testimonial[] = [
-  { name: "Rafael Moura", handle: "@rafa.mvp", role: "VALORANT · Imortal", source: "Discord", rating: 5, metric: "130 → 214 FPS", text: "Achei que ia precisar trocar de placa. Saí de 130 pra 214 de FPS médio com o mesmo PC, e o que mais mudou foi a estabilidade — parou de dar aquela travadinha na hora da troca de tiro." },
-  { name: "Beatriz Lopes", handle: "@bia.plays", role: "Warzone · Casual", source: "Instagram", rating: 5, metric: "Stutter zerado", text: "Meu problema não era FPS baixo, era travar do nada. Ele identificou em 20 minutos uma coisa que dois técnicos aqui da cidade não acharam. Explicou tudo enquanto fazia." },
-  { name: "Diego Xavier", handle: "@dgx", role: "Streamer", source: "Discord", rating: 5, metric: "0,1% de frames perdidos", text: "Live e jogo no mesmo PC sempre foi um sofrimento. Agora transmito em 1080p60 com o jogo acima de 160 FPS. Ele configurou até o áudio, que era o que mais me dava dor de cabeça." },
   { name: "Lucas Andrade", handle: "@lukz", role: "CS2 · Notebook", source: "WhatsApp", rating: 5, metric: "-16 °C na CPU", text: "Notebook velho, já tava me conformando. O ganho maior foi o PC parar de esquentar e cair FPS depois de meia hora de jogo. Valeu cada centavo." },
   { name: "Camila Reis", handle: "@mila.rz", role: "Fortnite", source: "Instagram", rating: 5, metric: "Boot de 58s → 15s", text: "Não entendo nada de PC e tinha medo de deixar alguém mexer remoto. Ele mostrou a tela o tempo todo, avisou antes de cada mudança e fez ponto de restauração. Zero estresse." },
   { name: "Pedro Henrique", handle: "@ph.gg", role: "Apex Legends", source: "Discord", rating: 5, metric: "1% low +140%", text: "O relatório de antes e depois é o diferencial. Não é 'confia que melhorou', é número em cima da mesa. Já indiquei pra três amigos do time." },

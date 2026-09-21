@@ -4,7 +4,7 @@ import type { Metadata } from "next";
    pode ser exportado de Server Component, e a página em si precisa ser
    Client Component (ouve a tecla Escape). noindex aqui de propósito — é
    um easter egg de estilo "tela de erro", não algo que deveria aparecer
-   numa busca por "usantossfps" ou ser o primeiro contato de alguém com a
+   numa busca por "usantoosfps" ou ser o primeiro contato de alguém com a
    marca. */
 export const metadata: Metadata = {
   title: "Alerta de configuração",

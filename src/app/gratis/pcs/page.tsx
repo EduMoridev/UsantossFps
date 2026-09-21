@@ -111,7 +111,7 @@ function BannerModoDev({
 const itemListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Montagens de PC gamer recomendadas pela UsantossFps",
+  name: "Montagens de PC gamer recomendadas pela UsantoosFps",
   numberOfItems: CONTAGEM_CONFIGS,
   itemListElement: CONFIGS.map((c, i) => ({
     "@type": "ListItem",

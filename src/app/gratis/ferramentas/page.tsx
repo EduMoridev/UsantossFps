@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const itemListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Ferramentas gratuitas recomendadas pela UsantossFps",
+  name: "Ferramentas gratuitas recomendadas pela UsantoosFps",
   numberOfItems: CONTAGEM_FERRAMENTAS,
   itemListElement: FERRAMENTAS.map((f, i) => ({
     "@type": "ListItem",

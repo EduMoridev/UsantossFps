@@ -44,7 +44,7 @@ export function ContactForm() {
 
   const waLink = useMemo(() => {
     const msg = [
-      `Olá! Vim pelo site da UsantossFps.`,
+      `Olá! Vim pelo site da UsantoosFps.`,
       ``,
       `Nome: ${v.nome || "-"}`,
       `Plano de interesse: ${v.plano || "-"}`,

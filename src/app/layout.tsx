@@ -6,7 +6,9 @@ import { ChromeGate } from "@/components/ChromeGate";
 import { BRAND } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://usantossfps.com.br"), // TODO: confirmar domínio
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  ),
   title: {
     default: `${BRAND.name} — ${BRAND.tagline}`,
     template: `%s · ${BRAND.name}`,
@@ -24,6 +26,10 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   manifest: "/manifest.json",
+  robots:
+    process.env.VERCEL_ENV === "production"
+      ? undefined
+      : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {

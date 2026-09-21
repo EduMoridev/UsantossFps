@@ -8,7 +8,7 @@ import { TESTIMONIALS } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Guia de estilo",
-  description: "Paleta, tipografia, espaçamentos, componentes e regras de movimento do design system UsantossFps.",
+  description: "Paleta, tipografia, espaçamentos, componentes e regras de movimento do design system UsantoosFps.",
 };
 
 const COLORS = [
@@ -65,7 +65,7 @@ export default function StyleGuidePage() {
     <>
       <PageHero
         eyebrow="design system"
-        title={<>Guia de estilo <span className="text-accent">UsantossFps</span></>}
+        title={<>Guia de estilo <span className="text-accent">UsantoosFps</span></>}
         lead="Tokens, tipografia, espaçamento, componentes e regras de movimento. Esta página é gerada pelos mesmos componentes do site — se ela está certa, o site está certo."
       />
 

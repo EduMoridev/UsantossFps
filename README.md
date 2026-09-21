@@ -1,4 +1,4 @@
-# UsantossFps — site institucional
+# UsantoosFps — site institucional
 
 Site de otimização remota de PC para jogos. Next.js 15 + Tailwind CSS v4,
 App Router, 15 rotas, dark mode nativo e conteúdo centralizado em um arquivo só.

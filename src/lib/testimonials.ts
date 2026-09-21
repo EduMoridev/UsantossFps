@@ -1,99 +1,108 @@
 /* ============================================================
    Depoimentos do marquee de prova social (home).
-   Os 3 primeiros são reais — mesmo texto e selo já usados no site.
-   Os demais são placeholders para preencher com depoimentos reais
-   antes de publicar (ver comentários acima de cada um).
+   Todos vêm do Discord/WhatsApp da UsantoosFps. `consentimento`
+   começa em false para cada um — só vira true depois que o
+   cliente confirmar o uso, um por um. Enquanto for false, o
+   depoimento não é renderizado (ver TestimonialsMarquee).
    ============================================================ */
 
-export type TestimonialSource = "Discord" | "Instagram" | "WhatsApp";
+export type TestimonialSource = "Discord" | "WhatsApp";
 
-export type Testimonial = {
-  source: TestimonialSource;
+export type Depoimento = {
+  id: string;
+  /** Nick do Discord, sem @ — o @ é adicionado só na renderização. */
+  nick: string;
+  origem: TestimonialSource;
+  /** Só quando o plano foi confirmado. */
+  plano?: string;
   text: string;
-  /** Selo com o número que mudou (ex: "130 → 214 FPS"). Opcional. */
-  badge?: string;
-  initials: string;
-  name: string;
-  context: string;
+  /** Só quando for uma medição real de antes/depois. */
+  fpsAntes?: string;
+  fpsDepois?: string;
+  /** Onde e como foi medido — é o que dá credibilidade ao número. */
+  contexto?: string;
+  /** false = não renderiza, mesmo com o resto dos dados preenchido. */
+  consentimento: boolean;
 };
 
-export const TESTIMONIALS: Testimonial[] = [
+export const DEPOIMENTOS: Depoimento[] = [
   {
-    source: "Discord",
-    text: "Achei que ia precisar trocar de placa. Saí de 130 pra 214 de FPS médio com o mesmo PC, e o que mais mudou foi a estabilidade — parou de dar aquela travadinha na hora da troca de tiro.",
-    badge: "130 → 214 FPS",
-    initials: "RM",
-    name: "Rafael Moura",
-    context: "VALORANT · Imortal",
+    id: "salmos91",
+    nick: "salmos91",
+    origem: "Discord",
+    text: "Meu FPS chorava pra pegar 130. Tá acima de 250. Atirando nem desce.",
+    fpsAntes: "130",
+    fpsDepois: "250+",
+    contexto: "Free Fire",
+    consentimento: false,
   },
   {
-    source: "Instagram",
-    text: "Meu problema não era FPS baixo, era travar do nada. Ele identificou em 20 minutos uma coisa que dois técnicos aqui da cidade não acharam. Explicou tudo enquanto fazia.",
-    badge: "Stutter zerado",
-    initials: "BL",
-    name: "Beatriz Lopes",
-    context: "Warzone · Casual",
+    id: "two9fp",
+    nick: "two9fp",
+    origem: "Discord",
+    plano: "Start FPS",
+    text: "Fez milagre, mano. De 30 FPS pra 170. Melhorou demais.",
+    fpsAntes: "30",
+    fpsDepois: "170",
+    contexto: "Free Fire no emulador, em notebook",
+    consentimento: false,
   },
   {
-    source: "Discord",
-    text: "Live e jogo no mesmo PC sempre foi um sofrimento. Agora transmito em 1080p60 com o jogo acima de 160 FPS. Ele configurou até o áudio, que era o que mais me dava dor de cabeça.",
-    badge: "0,1% de frames perdidos",
-    initials: "DX",
-    name: "Diego Xavier",
-    context: "Streamer",
+    id: "silentzin7",
+    nick: "silentzin7",
+    origem: "Discord",
+    text: "Agora tá uma delícia. Atendimento impecável!",
+    // CONFERIR: "de 180 a 220 fps" pode ser faixa após a otimização ou
+    // antes→depois. Até confirmar, exibir só como faixa atual (fpsDepois).
+    fpsDepois: "180–220",
+    contexto: "Free Fire, gráfico no ultra",
+    consentimento: false,
   },
-  // PLACEHOLDER — SUBSTITUIR POR DEPOIMENTO REAL
   {
-    source: "WhatsApp",
-    text: "Depoimento de exemplo — trocar pelo texto real do cliente, mesma voz direta dos outros, sem exagero de marketing.",
-    badge: "Métrica antes → depois",
-    initials: "PL",
-    name: "Nome do cliente 1",
-    context: "Jogo · categoria",
+    id: "jotta",
+    nick: "jotta",
+    origem: "Discord",
+    text: "240 FPS jogando o treinamento. Absurdo. Tá muito clean.",
+    fpsDepois: "240",
+    contexto: "medido no modo treinamento",
+    consentimento: false,
   },
-  // PLACEHOLDER — SUBSTITUIR POR DEPOIMENTO REAL
   {
-    source: "Discord",
-    text: "Depoimento de exemplo — trocar pelo texto real do cliente, mesma voz direta dos outros, sem exagero de marketing.",
-    badge: "Métrica antes → depois",
-    initials: "PL",
-    name: "Nome do cliente 2",
-    context: "Jogo · categoria",
+    id: "iguim",
+    nick: "iguim",
+    origem: "Discord",
+    plano: "Advanced FPS",
+    text: "Bizarro de bom.",
+    fpsDepois: "218",
+    contexto: "Free Fire, contador na tela",
+    consentimento: false,
   },
-  // PLACEHOLDER — SUBSTITUIR POR DEPOIMENTO REAL
   {
-    source: "Instagram",
-    text: "Depoimento de exemplo — trocar pelo texto real do cliente, mesma voz direta dos outros, sem exagero de marketing.",
-    badge: "Métrica antes → depois",
-    initials: "PL",
-    name: "Nome do cliente 3",
-    context: "Jogo · categoria",
+    id: "killua",
+    nick: "killua",
+    origem: "Discord",
+    text: "Agora sim, 140 FPS na BR. Valeu!",
+    // Sem fpsAntes: os 60 FPS anteriores eram trava de config do emulador,
+    // não desempenho de fato — usar como antes/depois seria enganoso.
+    fpsDepois: "140",
+    contexto: "Free Fire no emulador, modo Battle Royale",
+    consentimento: false,
   },
-  // PLACEHOLDER — SUBSTITUIR POR DEPOIMENTO REAL
   {
-    source: "WhatsApp",
-    text: "Depoimento de exemplo — trocar pelo texto real do cliente, mesma voz direta dos outros, sem exagero de marketing.",
-    badge: "Métrica antes → depois",
-    initials: "PL",
-    name: "Nome do cliente 4",
-    context: "Jogo · categoria",
+    id: "lucifer",
+    nick: "lucifer",
+    origem: "Discord",
+    text: "Tá na média de 160, 170 e não tá descendo muito quando atiro.",
+    fpsDepois: "160–170",
+    contexto: "Free Fire, estável durante troca de tiro",
+    consentimento: false,
   },
-  // PLACEHOLDER — SUBSTITUIR POR DEPOIMENTO REAL
   {
-    source: "Discord",
-    text: "Depoimento de exemplo — trocar pelo texto real do cliente, mesma voz direta dos outros, sem exagero de marketing.",
-    badge: "Métrica antes → depois",
-    initials: "PL",
-    name: "Nome do cliente 5",
-    context: "Jogo · categoria",
-  },
-  // PLACEHOLDER — SUBSTITUIR POR DEPOIMENTO REAL
-  {
-    source: "Instagram",
-    text: "Depoimento de exemplo — trocar pelo texto real do cliente, mesma voz direta dos outros, sem exagero de marketing.",
-    badge: "Métrica antes → depois",
-    initials: "PL",
-    name: "Nome do cliente 6",
-    context: "Jogo · categoria",
+    id: "diniyz",
+    nick: "diniyz",
+    origem: "Discord",
+    text: "FPS muito bom. Jogo tá lisinho de novo.",
+    contexto: "Free Fire",
+    consentimento: false,
   },
 ];
