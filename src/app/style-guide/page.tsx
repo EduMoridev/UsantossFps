@@ -35,10 +35,10 @@ const COLORS = [
 ];
 
 const TYPE = [
-  { n: "Display", cls: "font-display text-[3rem] leading-[1.02] tracking-[-0.035em]", spec: "Space Grotesk 600 · 68px/1.02 · -3.5%", t: "Seu setup no máximo" },
-  { n: "H1", cls: "font-display text-[2.5rem] leading-[1.06] tracking-[-0.03em]", spec: "Space Grotesk 600 · 48px/1.06 · -3%", t: "Antes e depois medido" },
-  { n: "H2", cls: "font-display text-[2rem] leading-[1.12] tracking-[-0.025em]", spec: "Space Grotesk 600 · 34px/1.12 · -2.5%", t: "O gargalo quase nunca é a placa" },
-  { n: "H3", cls: "font-display text-[1.375rem] leading-[1.25] tracking-[-0.015em]", spec: "Space Grotesk 600 · 22px/1.25", t: "Otimização completa de PC" },
+  { n: "Display", cls: "font-display text-[3rem] leading-[1.08] tracking-tight", spec: "Poppins 800 · 68px/1.08 · -2.5%", t: "Seu setup no máximo" },
+  { n: "H1", cls: "font-display text-[2.5rem] leading-[1.1] tracking-tight", spec: "Poppins 700 · 48px/1.1 · -2.5%", t: "Antes e depois medido" },
+  { n: "H2", cls: "font-display text-[2rem] leading-[1.16] tracking-tight", spec: "Poppins 700 · 34px/1.16 · -2.5%", t: "O gargalo quase nunca é a placa" },
+  { n: "H3", cls: "font-display text-[1.375rem] leading-[1.25] tracking-[-0.015em]", spec: "Poppins 700 · 22px/1.25", t: "Otimização completa de PC" },
   { n: "Corpo", cls: "text-base leading-[1.65] text-ink-2", spec: "Inter 400 · 16px/1.65 · máx. 68ch", t: "Otimização remota que ataca a causa real da queda de FPS, com medição antes e depois." },
   { n: "Pequeno", cls: "text-sm leading-[1.6] text-ink-3", spec: "Inter 400 · 14px/1.6", t: "Média de 312 atendimentos com medição completa." },
   { n: "Micro / mono", cls: "font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-accent", spec: "Mono 400 · 11px · +16% tracking", t: "SISTEMA ONLINE // FPS MÉDIO" },
@@ -120,8 +120,8 @@ export default function StyleGuidePage() {
       <Section id="tipografia" tone="raised">
         <SectionHead
           eyebrow="02 · tipografia"
-          title="Space Grotesk para títulos, Inter para leitura."
-          lead="Space Grotesk tem desenho técnico e ótima presença em tamanho grande. Inter é a mais legível em corpo pequeno no escuro. Mono só para rótulos e números."
+          title="Poppins para destaque, Inter para leitura."
+          lead="Poppins entra só em títulos, nomes e preços de plano, badges, CTAs e números grandes de métrica — nunca no corpo. Inter é a mais legível em corpo pequeno no escuro. Mono só para rótulos e números técnicos."
         />
         <div className="grid gap-px overflow-hidden rounded-lg border border-line bg-line">
           {TYPE.map((t) => (

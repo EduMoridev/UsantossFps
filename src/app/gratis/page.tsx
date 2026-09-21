@@ -49,7 +49,7 @@ export default function GratisPage() {
       <div className="container-fl relative">
         <Reveal className="mb-12 flex max-w-3xl flex-col gap-6 md:mb-16">
           <Eyebrow>grátis</Eyebrow>
-          <h1 className="text-[2.5rem] leading-[1.05] tracking-[-0.035em] md:text-h1">
+          <h1 className="text-[2.5rem] leading-[1.1] tracking-tight md:text-h1">
             Tudo que uso nos atendimentos, sem custo.
           </h1>
           <p className="max-w-2xl text-lg leading-relaxed text-ink-2">

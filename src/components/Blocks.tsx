@@ -15,7 +15,7 @@ export function PageHero({
       <div className="container-fl relative">
         <Reveal className="flex max-w-3xl flex-col gap-6">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="text-[2.5rem] leading-[1.05] tracking-[-0.035em] md:text-h1">{title}</h1>
+          <h1 className="text-[2.5rem] leading-[1.1] tracking-tight md:text-h1">{title}</h1>
           {lead && <p className="max-w-2xl text-lg leading-relaxed text-ink-2">{lead}</p>}
           {children}
         </Reveal>
@@ -169,7 +169,7 @@ export function CTABand({
             </span>
             {CONTACT.responseTime}
           </Badge>
-          <h2 className="text-[2rem] leading-[1.08] tracking-[-0.03em] md:text-[2.75rem]">{title}</h2>
+          <h2 className="text-[2rem] leading-[1.14] tracking-tight md:text-[2.75rem]">{title}</h2>
           <p className="max-w-xl text-ink-2 md:text-lg">{lead}</p>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row">
             <Button href="/contato" size="lg" icon="arrow">Agendar diagnóstico grátis</Button>

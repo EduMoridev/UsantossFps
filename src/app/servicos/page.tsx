@@ -42,7 +42,7 @@ function ServicoCard({ s }: { s: Servico }) {
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-[1.0625rem] font-semibold leading-snug text-ink">{s.nome}</h3>
-        {isCurso && <Badge tone="accent">curso</Badge>}
+        {isCurso && <Badge tone="accent" emphasis="display">curso</Badge>}
       </div>
 
       <div className="font-mono text-[1.0625rem] font-semibold text-accent">{formatBRL(s.preco)}</div>

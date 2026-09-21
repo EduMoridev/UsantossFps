@@ -29,7 +29,7 @@ export default function GratisScriptsPage() {
         <div className="container-fl relative">
           <Reveal className="flex max-w-3xl flex-col gap-6">
             <Eyebrow>scripts gratuitos</Eyebrow>
-            <h1 className="text-[2.5rem] leading-[1.05] tracking-[-0.035em] md:text-h1">
+            <h1 className="text-[2.5rem] leading-[1.1] tracking-tight md:text-h1">
               Scripts prontos para o seu PC.
               <br />
               <span className="text-accent">Sem custo, sem letra miúda.</span>

@@ -45,7 +45,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={60}>
-              <h1 className="text-[2.625rem] leading-[1.03] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[3.75rem]">
+              <h1 className="text-[2.625rem] leading-[1.1] tracking-tight sm:text-[3.25rem] lg:text-[3.75rem]">
                 <span className="text-gradient-ink">Seu setup no máximo.</span>
                 <br />
                 <span className="text-accent">Sem trocar uma peça.</span>
@@ -151,7 +151,7 @@ export default function Home() {
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <Reveal dir="left" className="flex flex-col gap-6">
             <Eyebrow>o que ninguém te conta</Eyebrow>
-            <h2 className="text-[2rem] leading-[1.1] tracking-[-0.028em] md:text-h2">
+            <h2 className="text-[2rem] leading-[1.16] tracking-tight md:text-h2">
               O gargalo quase nunca é a placa de vídeo.
             </h2>
             <p className="text-ink-2 md:text-lg">
@@ -255,7 +255,7 @@ export default function Home() {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-display text-lg font-semibold">{p.nome}</h3>
-                    {tag && <Badge tone="accent">{tag}</Badge>}
+                    {tag && <Badge tone="accent" emphasis="display">{tag}</Badge>}
                   </div>
                   <div>
                     <div className="flex flex-wrap items-baseline gap-x-2">
