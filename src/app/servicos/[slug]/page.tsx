@@ -54,7 +54,7 @@ export default async function ServicoPage({ params }: Props) {
                 </div>
               </div>
 
-              <h1 className="text-[2.25rem] leading-[1.06] tracking-[-0.035em] md:text-h1">
+              <h1 className="text-[2.25rem] leading-[1.1] tracking-tight md:text-h1">
                 {s.name}
               </h1>
               <p className="max-w-xl text-lg leading-relaxed text-ink-2">{s.headline}</p>

@@ -39,10 +39,10 @@ export default async function PostPage({ params }: Props) {
             </nav>
             <Reveal>
               <div className="mb-5 flex flex-wrap items-center gap-2">
-                <Badge tone="accent">{p.category}</Badge>
+                <Badge tone="accent" emphasis="display">{p.category}</Badge>
                 <Badge>{p.readTime} de leitura</Badge>
               </div>
-              <h1 className="text-[2.125rem] leading-[1.08] tracking-[-0.03em] md:text-[3rem]">
+              <h1 className="text-[2.125rem] leading-[1.12] tracking-tight md:text-[3rem]">
                 {p.title}
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-ink-2">{p.excerpt}</p>

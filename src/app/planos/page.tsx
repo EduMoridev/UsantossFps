@@ -44,7 +44,7 @@ export default function PlanosPage() {
                 >
                   {tag && (
                     <div className="absolute -top-3 left-6">
-                      <Badge tone="accent">{tag}</Badge>
+                      <Badge tone="accent" emphasis="display">{tag}</Badge>
                     </div>
                   )}
 

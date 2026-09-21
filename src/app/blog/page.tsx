@@ -32,8 +32,8 @@ export default function BlogPage() {
         >
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Badge tone="accent">Destaque</Badge>
-              <Badge>{featured.category}</Badge>
+              <Badge tone="accent" emphasis="display">Destaque</Badge>
+              <Badge emphasis="display">{featured.category}</Badge>
             </div>
             <h2 className="text-[1.75rem] leading-tight tracking-[-0.025em] transition-colors group-hover:text-accent md:text-[2.125rem]">
               {featured.title}

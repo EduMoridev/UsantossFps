@@ -132,7 +132,7 @@ export default function GratisPcsPage() {
         <div className="container-fl relative">
           <Reveal className="flex max-w-3xl flex-col gap-6">
             <Eyebrow>montagens</Eyebrow>
-            <h1 className="text-[2.5rem] leading-[1.05] tracking-[-0.035em] md:text-h1">
+            <h1 className="text-[2.5rem] leading-[1.1] tracking-tight md:text-h1">
               {CONTAGEM_CONFIGS} configurações de PC gamer,
               <br />
               por faixa de uso e orçamento.

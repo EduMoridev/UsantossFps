@@ -1,9 +1,22 @@
 import type { Metadata, Viewport } from "next";
+import { Poppins } from "next/font/google";
 import "@fontsource-variable/inter";
-import "@fontsource-variable/space-grotesk";
 import "./globals.css";
 import { ChromeGate } from "@/components/ChromeGate";
 import { BRAND } from "@/lib/site";
+
+/* Fonte de destaque (h1/h2, nomes e preços de plano, badges, CTAs,
+   números grandes de métrica/FPS — ver `--font-display` em
+   globals.css). Ponto único de troca: se o cliente decidir comprar a
+   Gilroy depois, troca-se só este `next/font/google` por
+   `next/font/local` apontando para os .woff2 em src/app/fonts/,
+   mantendo `variable: "--font-display"` — nenhum componente muda. */
+const fontDisplay = Poppins({
+  weight: ["700", "800"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -39,7 +52,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" data-theme="dark" suppressHydrationWarning>
+    <html lang="pt-BR" data-theme="dark" className={fontDisplay.variable} suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <a
           href="#conteudo"

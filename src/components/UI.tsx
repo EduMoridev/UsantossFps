@@ -37,7 +37,7 @@ export function Button({
     <HeroButton
       variant={VARIANT_MAP[variant]}
       size={size}
-      className={`group !rounded-lg font-medium whitespace-nowrap ${VARIANT_CLS[variant]} ${className}`}
+      className={`group !rounded-lg font-display font-medium tracking-tight whitespace-nowrap ${VARIANT_CLS[variant]} ${className}`}
       render={(props) => {
         // A HeroUI/react-aria tipa `render` para o elemento raiz padrão
         // (<button>), mas aqui ele sempre vira navegação (<a>/<Link>) —
@@ -108,18 +108,21 @@ export function SectionHead({
   );
 }
 
-/* ---------------------------------------------------------- BADGE */
+/* ---------------------------------------------------------- BADGE
+   `emphasis="display"` é só para selos promocionais/categoria ("mais
+   vendido", "novo", categorias) — o padrão continua em font-mono,
+   usado pra rótulos técnicos/meta (ferramentas, scripts, filtros). */
 export function Badge({
-  children, tone = "line", glass = false,
-}: { children: ReactNode; tone?: "line" | "accent"; glass?: boolean }) {
+  children, tone = "line", glass = false, emphasis = "mono",
+}: { children: ReactNode; tone?: "line" | "accent"; glass?: boolean; emphasis?: "mono" | "display" }) {
   return (
     <Chip
       size="sm"
       variant={tone === "accent" ? "soft" : "secondary"}
       color={tone === "accent" ? "accent" : "default"}
-      className={`whitespace-nowrap font-mono text-[0.625rem] uppercase tracking-[0.1em] sm:text-[0.6875rem] sm:tracking-[0.12em] ${
-        glass ? "backdrop-blur-md backdrop-saturate-150" : ""
-      }`}
+      className={`whitespace-nowrap text-[0.625rem] uppercase tracking-[0.1em] sm:text-[0.6875rem] sm:tracking-[0.12em] ${
+        emphasis === "display" ? "font-display font-semibold tracking-[0.04em]" : "font-mono"
+      } ${glass ? "backdrop-blur-md backdrop-saturate-150" : ""}`}
     >
       {children}
     </Chip>
