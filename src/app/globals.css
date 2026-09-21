@@ -2,7 +2,7 @@
 @import "@heroui/styles";
 
 /* ============================================================
-   UsantossFps — DESIGN TOKENS
+   UsantoosFps — DESIGN TOKENS
    Base escura neutra (zinc/stone) + 1 cor de acento (verde).
    ============================================================ */
 @theme {
@@ -65,7 +65,7 @@
 /* ============================================================
    HEROUI — mapeamento de tema
    O site é sempre escuro (sem alternância claro/escuro), então os
-   componentes HeroUI leem direto dos tokens UsantossFps acima — uma
+   componentes HeroUI leem direto dos tokens UsantoosFps acima — uma
    única fonte de verdade para cor em toda a UI, feita ou vinda da lib.
    ============================================================ */
 [data-theme="dark"] {
@@ -234,11 +234,519 @@
   100% { transform: translateY(400%); opacity: 0; }
 }
 
+/* ============================================================
+   FAQ (home) — colapso do <details>/<summary> nativo, 100% CSS.
+   ::details-content é o pseudo-elemento que o navegador já gera para
+   o conteúdo depois do <summary>; como height:auto não é animável,
+   a camada base anima via grid-template-rows (0fr → 1fr), truque
+   clássico pra simular "auto" animável. Funciona em qualquer
+   navegador com suporte ao pseudo-elemento (Chrome 131+, Firefox
+   143+, Safari 18.4+). O @supports troca para height real nos
+   navegadores com interpolate-size, sem o leve "overshoot" do grid.
+   ============================================================ */
+.faq-item::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.faq-item[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  .faq-item::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .faq-item[open]::details-content { height: auto; }
+}
+
+/* O grid só colapsa de verdade se o conteúdo real (dentro do
+   pseudo-elemento) puder encolher abaixo da própria altura — daí o
+   min-height:0 + overflow:hidden. O translateY dá peso à entrada. */
+.faq-item-body {
+  min-height: 0;
+  overflow: hidden;
+  transform: translateY(4px);
+  transition: transform 320ms var(--ease-out-fast);
+}
+.faq-item[open] .faq-item-body {
+  transform: translateY(0);
+}
+
+/* Resumo: leve deslocamento + cor no hover */
+.faq-item > summary {
+  transition: color 160ms ease, transform 160ms ease;
+}
+.faq-item > summary:hover {
+  color: var(--color-accent);
+  transform: translateX(2px);
+}
+
+/* Indicador "+" — gira 45° (vira "×") em sincronia com a abertura */
+.faq-item-icon {
+  transition: transform 320ms var(--ease-out-fast), color 320ms var(--ease-out-fast);
+}
+.faq-item[open] .faq-item-icon {
+  color: var(--color-accent);
+  transform: rotate(45deg);
+}
+
+/* Divisória entre perguntas acende em verde enquanto o item está aberto */
+.faq-item {
+  border-bottom: 1px solid var(--color-line);
+  transition: border-color 240ms ease;
+}
+.faq-item[open] {
+  border-color: color-mix(in oklab, var(--color-accent) 55%, transparent);
+}
+
+/* ============================================================
+   COMPARATIVO DE PLANOS (home) — mesma técnica do FAQ acima:
+   ::details-content é o pseudo-elemento que o navegador já gera
+   pro conteúdo depois do <summary>; anima via grid-template-rows
+   (0fr → 1fr) porque height:auto não é animável. O @supports troca
+   pra altura real nos navegadores com interpolate-size.
+   ============================================================ */
+.plan-compare::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.plan-compare[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@supports (interpolate-size: allow-keywords) {
+  .plan-compare::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .plan-compare[open]::details-content { height: auto; }
+}
+
+/* Conteúdo real dentro do pseudo-elemento precisa de min-height:0 +
+   overflow:hidden pro grid conseguir colapsar de verdade. */
+.plan-compare-body {
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 1.5rem;
+}
+
+/* Rótulo do summary alterna via CSS puro (sem JS): dois spans, só um
+   visível por vez, trocado pelo atributo [open] do próprio <details>. */
+.plan-compare-label-open { display: none; }
+.plan-compare[open] .plan-compare-label-open { display: inline; }
+.plan-compare[open] .plan-compare-label-closed { display: none; }
+
+.plan-compare-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.plan-compare[open] .plan-compare-icon {
+  transform: rotate(180deg);
+}
+
+/* Entrada escalonada das linhas — só roda quando [open]. Fora disso
+   (JS ou CSS não aplicados, navegador sem suporte) as linhas ficam
+   sempre visíveis: a regra padrão abaixo nunca deixa opacity preso
+   em 0, a animação só soma a partir do estado aberto. */
+.plan-compare-table tbody tr {
+  opacity: 1;
+  transform: none;
+}
+.plan-compare[open] .plan-compare-table tbody tr {
+  animation: plan-row-in 300ms var(--ease-out-fast) both;
+  animation-delay: min(calc(var(--i, 0) * 25ms), 350ms);
+}
+@keyframes plan-row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.plan-compare-table tbody tr:last-child > * {
+  border-bottom: none;
+}
+
+/* Coluna do plano em destaque (o que tiver `destaque` preenchido em
+   PLANOS, hoje o Advanced FPS — não é fixo num nome ou posição): peso
+   tipográfico (aplicado no componente) + borda lateral verde, sem
+   gradiente. border-collapse funde a borda de cada célula numa linha
+   vertical contínua ao longo da coluna. */
+.plan-compare-featured {
+  border-left: 1px solid color-mix(in oklab, var(--color-accent) 40%, transparent);
+  border-right: 1px solid color-mix(in oklab, var(--color-accent) 40%, transparent);
+}
+
+/* Hover de coluna via :has() — sem JavaScript. Se a tabela contém
+   uma célula :hover na posição N, toda célula na posição N (cabeçalho
+   incluído) ganha o fundo. Uma regra por índice de coluna — a coluna 1
+   é "Recurso", as seguintes são uma por plano (hoje 4 planos = até a
+   coluna 5; ajuste aqui se o número de planos mudar de novo). */
+.plan-compare-table:has(:is(thead, tbody) tr :nth-child(1):hover) :is(thead, tbody) tr :nth-child(1),
+.plan-compare-table:has(:is(thead, tbody) tr :nth-child(2):hover) :is(thead, tbody) tr :nth-child(2),
+.plan-compare-table:has(:is(thead, tbody) tr :nth-child(3):hover) :is(thead, tbody) tr :nth-child(3),
+.plan-compare-table:has(:is(thead, tbody) tr :nth-child(4):hover) :is(thead, tbody) tr :nth-child(4),
+.plan-compare-table:has(:is(thead, tbody) tr :nth-child(5):hover) :is(thead, tbody) tr :nth-child(5) {
+  background-color: color-mix(in oklab, var(--color-surface-2) 70%, transparent);
+  transition: background-color 150ms ease;
+}
+
+/* ============================================================
+   MARQUEE DE DEPOIMENTOS (home) — duas colunas, rolagem vertical
+   contínua só com CSS (transform + animation). Sob
+   prefers-reduced-motion este bloco nem chega a ser exibido — o
+   componente troca pra grade estática via motion-safe:/motion-reduce:
+   do Tailwind — mas as regras abaixo também zeram tudo por segurança.
+   ============================================================ */
+.testimonials-column {
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.testimonials-track {
+  animation-duration: 46s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.testimonials-track--up { animation-name: testimonials-scroll-up; }
+.testimonials-track--down { animation-name: testimonials-scroll-down; }
+@keyframes testimonials-scroll-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+@keyframes testimonials-scroll-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+/* Pausa em hover E em foco (teclado) — por isso os cards reais (não
+   os duplicados) recebem tabIndex no componente. */
+.testimonials-track:hover,
+.testimonials-track:focus-within {
+  animation-play-state: paused;
+}
+
+/* Card sob o cursor ganha destaque; os outros da MESMA coluna (não a
+   coluna inteira — :has() vive em .testimonials-column, uma instância
+   por coluna) esmaecem para opacity 0.6. Nunca 0: a base já é 1. */
+.testimonial-card {
+  opacity: 1;
+  transition: transform 200ms ease, border-color 200ms ease, opacity 200ms ease;
+}
+.testimonials-column:has(.testimonial-card:hover) .testimonial-card:not(:hover) {
+  opacity: 0.6;
+}
+.testimonial-card:hover {
+  transform: scale(1.02);
+  border-color: var(--color-accent);
+}
+
+/* Selo (a prova em número) pulsa um brilho sutil em loop */
+.testimonial-badge {
+  animation: testimonial-badge-glow 3s ease-in-out infinite alternate;
+}
+@keyframes testimonial-badge-glow {
+  from { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-accent) 0%, transparent); }
+  to { box-shadow: 0 0 12px 1px color-mix(in oklab, var(--color-accent) 45%, transparent); }
+}
+
+/* "Ver mais" no mobile — mesma técnica de ::details-content do FAQ */
+.testimonials-expand::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.testimonials-expand[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .testimonials-expand::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .testimonials-expand[open]::details-content { height: auto; }
+}
+.testimonials-expand-body {
+  min-height: 0;
+  overflow: hidden;
+}
+.testimonials-expand-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.testimonials-expand[open] .testimonials-expand-icon {
+  transform: rotate(180deg);
+}
+
+/* ============================================================
+   SCRIPTS GRÁTIS (/gratis/scripts)
+   ============================================================ */
+
+/* "Ver o código" — mesma técnica do FAQ da home: ::details-content
+   é o pseudo-elemento que o navegador já gera pro conteúdo depois
+   do <summary>; anima via grid-template-rows (0fr → 1fr) porque
+   height:auto não é animável. Classes próprias (não .faq-item)
+   porque aqui cada card abre/fecha de forma independente, sem o
+   agrupamento em acordeão exclusivo que o FAQ usa. */
+.script-code::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.script-code[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .script-code::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .script-code[open]::details-content { height: auto; }
+}
+.script-code-body {
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 0.875rem;
+}
+.script-code-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.script-code[open] .script-code-icon {
+  transform: rotate(180deg);
+}
+.script-code > summary {
+  transition: color 160ms ease;
+}
+.script-code > summary:hover {
+  color: var(--color-accent);
+}
+
+/* Brilho verde percorrendo a borda do card no hover — único efeito
+   novo desta seção. Gradiente mascarado para só a borda (técnica de
+   "gradient border"); a transição é de background-position, não um
+   keyframe em loop. Estado padrão é opacity:0 neste ::after
+   decorativo, nunca no conteúdo real do card. */
+.script-card {
+  position: relative;
+  isolation: isolate;
+}
+.script-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    var(--color-accent) 48%,
+    var(--color-accent-soft) 52%,
+    transparent 70%
+  );
+  background-size: 260% 260%;
+  background-position: -120% -120%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease, background-position 900ms var(--ease-out-fast);
+}
+.script-card:hover::after,
+.script-card:focus-within::after {
+  opacity: 1;
+  background-position: 120% 120%;
+}
+
+/* ============================================================
+   FERRAMENTAS (/gratis/ferramentas) — "Como usar" / "Cuidado": mesma
+   técnica de ::details-content do FAQ da home (grid-template-rows
+   0fr → 1fr, porque height:auto não é animável). Classe própria
+   porque cada card tem dois <details> independentes, sem o
+   agrupamento em acordeão exclusivo do FAQ.
+   ============================================================ */
+.tool-detail::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.tool-detail[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .tool-detail::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .tool-detail[open]::details-content { height: auto; }
+}
+/* Sem isso, o grid item (o único filho do ::details-content) não
+   encolhe abaixo do min-content — grid-template-rows: 0fr não colapsa
+   de verdade e sobra espaço fantasma com o acordeão fechado. Mesma
+   regra que .faq-item-body já aplica no FAQ da home. */
+.tool-detail-body {
+  min-height: 0;
+  overflow: hidden;
+}
+.tool-detail-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.tool-detail[open] .tool-detail-icon {
+  transform: rotate(180deg);
+}
+.tool-detail > summary {
+  transition: color 160ms ease;
+}
+.tool-detail > summary:hover {
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   MONTAGENS (/gratis/pcs) — "Onde comprar" no mobile: mesma técnica
+   de ::details-content do FAQ e do .tool-detail acima. Classe própria
+   porque cada peça tem seu próprio <details>, sem acordeão exclusivo.
+   ============================================================ */
+.pc-links::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    grid-template-rows 320ms var(--ease-out-fast),
+    opacity 220ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.pc-links[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@supports (interpolate-size: allow-keywords) {
+  .pc-links::details-content {
+    height: 0;
+    grid-template-rows: none;
+    display: block;
+    transition:
+      height 320ms var(--ease-out-fast),
+      opacity 220ms ease,
+      content-visibility 320ms allow-discrete;
+  }
+  .pc-links[open]::details-content { height: auto; }
+}
+.pc-links-body {
+  min-height: 0;
+  overflow: hidden;
+}
+.pc-links-icon {
+  transition: transform 320ms var(--ease-out-fast);
+}
+.pc-links[open] .pc-links-icon {
+  transform: rotate(180deg);
+}
+.pc-links > summary {
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.pc-links > summary:hover {
+  color: var(--color-accent);
+  border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+}
+
+/* Crossfade do card ao trocar AMD/Intel — a chave (key) que muda em
+   PcsExplorer força o remount que dispara esta entrada. O estado final
+   (100%) é sempre opacidade 1, então mesmo sem suporte a animação o
+   card fica visível. */
+@keyframes fl-card-switch {
+  from { opacity: 0.4; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.pc-card-switch {
+  animation: fl-card-switch 320ms var(--ease-out-fast);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .faq-item,
+  .faq-item *,
+  .faq-item::details-content,
+  .plan-compare,
+  .plan-compare *,
+  .plan-compare::details-content,
+  .testimonials-track,
+  .testimonials-track *,
+  .testimonials-expand,
+  .testimonials-expand *,
+  .testimonials-expand::details-content,
+  .script-code,
+  .script-code *,
+  .script-code::details-content,
+  .tool-detail,
+  .tool-detail *,
+  .tool-detail::details-content,
+  .pc-links,
+  .pc-links *,
+  .pc-links::details-content {
+    transition-duration: 0.01ms !important;
+  }
+  .script-card::after {
+    display: none;
   }
 }

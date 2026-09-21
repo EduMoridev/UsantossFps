@@ -2,24 +2,34 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/space-grotesk";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { FloatingCTA } from "@/components/FloatingCTA";
+import { ChromeGate } from "@/components/ChromeGate";
 import { BRAND } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://usantossfps.gg"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  ),
   title: {
     default: `${BRAND.name} — ${BRAND.tagline}`,
     template: `%s · ${BRAND.name}`,
   },
   description:
-    "Otimização remota de PC para jogos: mais FPS, 1% low estável e menos input lag no hardware que você já tem. Medição antes e depois, garantia de 7 dias.",
+    "Otimização remota de PC para jogos: mais FPS e menos input lag, com medição antes e depois. Sem trocar hardware.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: BRAND.name,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: BRAND.name }],
   },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
+  },
+  manifest: "/manifest.json",
+  robots:
+    process.env.VERCEL_ENV === "production"
+      ? undefined
+      : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
@@ -37,10 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Pular para o conteúdo
         </a>
-        <Header />
-        <main id="conteudo">{children}</main>
-        <Footer />
-        <FloatingCTA />
+        <ChromeGate>{children}</ChromeGate>
       </body>
     </html>
   );

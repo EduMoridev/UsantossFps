@@ -4,7 +4,7 @@ import { Accordion as HeroAccordion } from "@heroui/react";
 import { Icon } from "./Icon";
 
 /* Wrapper fino sobre o Accordion compound da HeroUI: estado, teclado
-   e ARIA vêm da lib, aqui só entra o estilo UsantossFps. */
+   e ARIA vêm da lib, aqui só entra o estilo UsantoosFps. */
 export function Accordion({
   items, defaultOpen = -1,
 }: { items: { q: string; a: string }[]; defaultOpen?: number }) {

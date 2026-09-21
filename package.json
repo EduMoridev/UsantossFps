@@ -1,12 +1,16 @@
 {
-  "name": "usantossfps",
+  "name": "usantoosfps",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/build-scripts-manifest.mjs && node --experimental-strip-types scripts/check-pcs.mjs && node --experimental-strip-types scripts/check-servicos.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "scripts:manifest": "node scripts/build-scripts-manifest.mjs",
+    "check:pcs": "node --experimental-strip-types scripts/check-pcs.mjs",
+    "check:servicos": "node --experimental-strip-types scripts/check-servicos.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
@@ -18,6 +22,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "fuse.js": "^7.5.0",
+    "lucide-react": "^1.47.0",
     "motion": "^13.2.0",
     "next": "15.5.4",
     "react": "19.1.1",
@@ -26,6 +31,7 @@
     "tailwind-variants": "^3.3.1"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.3.5",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^22",
     "@types/react": "^19",

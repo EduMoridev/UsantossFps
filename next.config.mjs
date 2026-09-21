@@ -1,3 +1,9 @@
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -13,10 +19,11 @@ const nextConfig = {
       "motion",
       "fuse.js",
       "cmdk",
+      "lucide-react",
     ],
   },
   // `STATIC_EXPORT=1 npm run build` gera um site estático em ./out
   ...(process.env.STATIC_EXPORT ? { output: "export", trailingSlash: true, images: { unoptimized: true } } : {}),
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

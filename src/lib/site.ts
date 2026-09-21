@@ -1,14 +1,14 @@
 /* ============================================================
-   UsantossFps — fonte única de conteúdo.
+   UsantoosFps — fonte única de conteúdo.
    Trocar marca, preços, contatos e cases aqui reflete no site inteiro.
    ============================================================ */
 
 export const BRAND = {
-  name: "UsantossFps",
-  nameParts: ["Usantoss", "Fps"] as const,
+  name: "UsantoosFps",
+  nameParts: ["Usantoos", "Fps"] as const,
   tagline: "Seu setup no máximo. Sem trocar uma peça.",
   short: "Engenharia de performance para PC gamer.",
-  legalName: "UsantossFps Otimização de Performance",
+  legalName: "UsantoosFps Otimização de Performance",
   cnpj: "00.000.000/0001-00",
 };
 
@@ -16,12 +16,12 @@ export const CONTACT = {
   whatsapp: "5511951422087",
   whatsappLabel: "(11) 95142-2087",
   whatsappUrl:
-    "https://wa.me/5511951422087?text=Fala!%20Quero%20otimizar%20meu%20PC%20com%20a%20UsantossFps.",
-  discord: "https://discord.com/invite/e9F3AsGDqW",
+    "https://wa.me/5511951422087?text=Fala!%20Quero%20otimizar%20meu%20PC%20com%20a%20UsantoosFps.",
+  discord: "https://discord.gg/usantoosfps",
   instagram: "https://instagram.com/usantoosfps",
   tiktok: "https://tiktok.com/@usantoosfps",
   youtube: "https://youtube.com/@usantoosfps",
-  email: "contato@usantossfps.gg",
+  email: "contato@usantoosfps.gg",
   responseTime: "Resposta média em 12 min",
   hours: "Seg a Sáb · 10h às 22h (BRT)",
 };
@@ -32,6 +32,7 @@ export const NAV = [
   { label: "Resultados", href: "/resultados" },
   { label: "Como funciona", href: "/como-funciona" },
   { label: "Blog", href: "/blog" },
+  { label: "Grátis", href: "/gratis" },
 ];
 
 export const FOOTER_NAV = [
@@ -411,96 +412,13 @@ export const SERVICES: Service[] = [
   },
 ];
 
-/* ---------------------------------------------- PLANOS */
-export type Plan = {
-  id: string;
-  name: string;
-  price: string;
-  period: string;
-  pitch: string;
-  featured?: boolean;
-  badge?: string;
-  duration: string;
-  cta: string;
-  features: { label: string; included: boolean }[];
-};
-
-export const PLANS: Plan[] = [
-  {
-    id: "essencial",
-    name: "Essencial",
-    price: "R$ 89",
-    period: "pagamento único",
-    pitch: "Para quem quer tirar o peso do sistema e sentir o jogo respirar.",
-    duration: "60 a 90 min",
-    cta: "Começar pelo Essencial",
-    features: [
-      { label: "Otimização completa do Windows", included: true },
-      { label: "Remoção de bloatware e processos em segundo plano", included: true },
-      { label: "Plano de energia e prioridade de processo", included: true },
-      { label: "Painel da placa de vídeo configurado", included: true },
-      { label: "Relatório antes/depois de FPS", included: true },
-      { label: "Garantia de 7 dias", included: true },
-      { label: "Tuning de 1 jogo específico", included: false },
-      { label: "Drivers e BIOS (XMP/EXPO, ReBAR)", included: false },
-      { label: "Medição de input lag ponta a ponta", included: false },
-      { label: "Setup de live e gravação", included: false },
-      { label: "Suporte pós-atendimento", included: false },
-    ],
-  },
-  {
-    id: "competitivo",
-    name: "Competitivo",
-    price: "R$ 169",
-    period: "pagamento único",
-    pitch: "O padrão de quem joga ranqueado e liga para 1% low e input lag.",
-    featured: true,
-    badge: "Mais escolhido",
-    duration: "2 a 3 h",
-    cta: "Quero o Competitivo",
-    features: [
-      { label: "Otimização completa do Windows", included: true },
-      { label: "Remoção de bloatware e processos em segundo plano", included: true },
-      { label: "Plano de energia e prioridade de processo", included: true },
-      { label: "Painel da placa de vídeo configurado", included: true },
-      { label: "Relatório antes/depois de FPS", included: true },
-      { label: "Garantia de 7 dias", included: true },
-      { label: "Tuning de 1 jogo específico", included: true },
-      { label: "Drivers e BIOS (XMP/EXPO, ReBAR)", included: true },
-      { label: "Medição de input lag ponta a ponta", included: true },
-      { label: "Setup de live e gravação", included: false },
-      { label: "Suporte pós-atendimento", included: true },
-    ],
-  },
-  {
-    id: "elite",
-    name: "Elite",
-    price: "R$ 289",
-    period: "pagamento único",
-    pitch: "Máquina inteira revisada, incluindo transmissão e acompanhamento.",
-    duration: "4 a 6 h (pode ser em 2 sessões)",
-    cta: "Falar sobre o Elite",
-    features: [
-      { label: "Otimização completa do Windows", included: true },
-      { label: "Remoção de bloatware e processos em segundo plano", included: true },
-      { label: "Plano de energia e prioridade de processo", included: true },
-      { label: "Painel da placa de vídeo configurado", included: true },
-      { label: "Relatório antes/depois de FPS", included: true },
-      { label: "Garantia de 7 dias", included: true },
-      { label: "Tuning de até 3 jogos", included: true },
-      { label: "Drivers e BIOS (XMP/EXPO, ReBAR)", included: true },
-      { label: "Medição de input lag ponta a ponta", included: true },
-      { label: "Setup de live e gravação", included: true },
-      { label: "Suporte pós-atendimento por 30 dias", included: true },
-    ],
-  },
-];
-
-export const PLAN_NOTES = [
-  "Valores de referência para hardware doméstico. Setups com mais de um PC ou uso profissional são orçados à parte.",
-  "Pagamento em PIX à vista ou cartão em até 3x (condições no atendimento).",
-  "Formatação com instalação limpa entra como adicional de R$ 129 em qualquer plano.",
-];
+/* ---------------------------------------------- PLANOS
+   Migrado para src/lib/planos.ts (PLANOS, FORMAS_PAGAMENTO,
+   PERIODO_PAGAMENTO) — Essencial/Competitivo/Elite deram lugar a Start
+   FPS/Not Extreme/Advanced FPS/Pro Experience. Não recriar Plan/PLANS
+   aqui: isso é exatamente a duplicação que deixou home, /planos e a
+   matriz de comparação dessincronizadas da última vez que os planos
+   mudaram. */
 
 /* ---------------------------------------------- CASES / RESULTADOS */
 export type Case = {
@@ -597,9 +515,6 @@ export type Testimonial = {
 };
 
 export const TESTIMONIALS: Testimonial[] = [
-  { name: "Rafael Moura", handle: "@rafa.mvp", role: "VALORANT · Imortal", source: "Discord", rating: 5, metric: "130 → 214 FPS", text: "Achei que ia precisar trocar de placa. Saí de 130 pra 214 de FPS médio com o mesmo PC, e o que mais mudou foi a estabilidade — parou de dar aquela travadinha na hora da troca de tiro." },
-  { name: "Beatriz Lopes", handle: "@bia.plays", role: "Warzone · Casual", source: "Instagram", rating: 5, metric: "Stutter zerado", text: "Meu problema não era FPS baixo, era travar do nada. Ele identificou em 20 minutos uma coisa que dois técnicos aqui da cidade não acharam. Explicou tudo enquanto fazia." },
-  { name: "Diego Xavier", handle: "@dgx", role: "Streamer", source: "Discord", rating: 5, metric: "0,1% de frames perdidos", text: "Live e jogo no mesmo PC sempre foi um sofrimento. Agora transmito em 1080p60 com o jogo acima de 160 FPS. Ele configurou até o áudio, que era o que mais me dava dor de cabeça." },
   { name: "Lucas Andrade", handle: "@lukz", role: "CS2 · Notebook", source: "WhatsApp", rating: 5, metric: "-16 °C na CPU", text: "Notebook velho, já tava me conformando. O ganho maior foi o PC parar de esquentar e cair FPS depois de meia hora de jogo. Valeu cada centavo." },
   { name: "Camila Reis", handle: "@mila.rz", role: "Fortnite", source: "Instagram", rating: 5, metric: "Boot de 58s → 15s", text: "Não entendo nada de PC e tinha medo de deixar alguém mexer remoto. Ele mostrou a tela o tempo todo, avisou antes de cada mudança e fez ponto de restauração. Zero estresse." },
   { name: "Pedro Henrique", handle: "@ph.gg", role: "Apex Legends", source: "Discord", rating: 5, metric: "1% low +140%", text: "O relatório de antes e depois é o diferencial. Não é 'confia que melhorou', é número em cima da mesa. Já indiquei pra três amigos do time." },
