@@ -47,12 +47,8 @@ function ServicoCard({ s }: { s: Servico }) {
 
       <div className="font-mono text-[1.0625rem] font-semibold text-accent">{formatBRL(s.preco)}</div>
 
-      {s.descricao ? (
+      {s.descricao && (
         <p className="flex-1 text-[0.875rem] leading-relaxed text-ink-2">{s.descricao}</p>
-      ) : (
-        <p className="flex-1 text-[0.875rem] italic leading-relaxed text-ink-3">
-          Descrição pendente — aguardando confirmação do cliente.
-        </p>
       )}
 
       {s.duracao && (
