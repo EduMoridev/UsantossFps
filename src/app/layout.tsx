@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "@fontsource-variable/inter";
 import "./globals.css";
 import { ChromeGate } from "@/components/ChromeGate";
+import { SiteBackground } from "@/components/background/SiteBackground";
+import { MotionBudgetProvider } from "@/lib/motion/budget";
 import { BRAND } from "@/lib/site";
 
 /* Fonte de destaque (h1/h2, nomes e preços de plano, badges, CTAs,
@@ -54,13 +56,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" data-theme="dark" className={fontDisplay.variable} suppressHydrationWarning>
       <body className="min-h-screen antialiased">
-        <a
-          href="#conteudo"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#052e16]"
-        >
-          Pular para o conteúdo
-        </a>
-        <ChromeGate>{children}</ChromeGate>
+        <MotionBudgetProvider>
+          <SiteBackground />
+          <a
+            href="#conteudo"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#052e16]"
+          >
+            Pular para o conteúdo
+          </a>
+          <ChromeGate>{children}</ChromeGate>
+        </MotionBudgetProvider>
       </body>
     </html>
   );
