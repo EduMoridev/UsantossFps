@@ -80,7 +80,7 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 export function Section({
   children, className = "", id, tone = "base",
 }: { children: ReactNode; className?: string; id?: string; tone?: "base" | "raised" | "void" }) {
-  const bg = { base: "", raised: "bg-surface/40", void: "bg-void" }[tone];
+  const bg = { base: "", raised: "bg-surface/40", void: "bg-void/90" }[tone];
   return (
     <section id={id} className={`border-t border-line-soft py-20 md:py-28 ${bg} ${className}`}>
       <div className="container-fl">{children}</div>

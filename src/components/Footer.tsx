@@ -12,7 +12,7 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-void">
+    <footer className="border-t border-line bg-void/90 backdrop-blur-sm">
       <div className="container-fl py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_2fr]">
           <div className="flex flex-col gap-5">

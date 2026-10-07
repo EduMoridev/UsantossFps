@@ -725,6 +725,55 @@
   animation: fl-card-switch 320ms var(--ease-out-fast);
 }
 
+/* ============================================================
+   FUNDO GLOBAL — brilho ambiente (SiteBackground). Blobs parados por
+   padrão; só derivam com <html data-motion="full">, setado pelo
+   MotionBudgetProvider depois do mount (nunca no HTML do servidor).
+   prefers-reduced-motion já zera qualquer animation-duration acima.
+   ============================================================ */
+.bg-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  will-change: transform;
+}
+.bg-blob-1 {
+  top: -10%;
+  left: -10%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-accent) 10%, transparent) 0%, transparent 70%);
+}
+.bg-blob-2 {
+  bottom: -15%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-accent) 8%, transparent) 0%, transparent 70%);
+}
+.bg-blob-3 {
+  top: 35%;
+  left: 40%;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-accent-soft) 6%, transparent) 0%, transparent 70%);
+}
+html[data-motion="full"] .bg-blob-1 { animation: bg-drift-1 26s ease-in-out infinite; }
+html[data-motion="full"] .bg-blob-2 { animation: bg-drift-2 22s ease-in-out infinite; }
+html[data-motion="full"] .bg-blob-3 { animation: bg-drift-3 30s ease-in-out infinite; }
+@keyframes bg-drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6vw, 8vh); }
+}
+@keyframes bg-drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-7vw, -6vh); }
+}
+@keyframes bg-drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5vw, 7vh); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
