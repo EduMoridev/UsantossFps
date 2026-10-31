@@ -99,7 +99,7 @@ export default function ComoFuncionaPage() {
                   "Ao encerrar, o código expira. Para um novo atendimento, gera-se outro.",
                 ].map((t, i) => (
                   <li key={t} className="flex gap-3">
-                    <span className="font-mono text-xs text-accent/60">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-xs text-accent-text">{String(i + 1).padStart(2, "0")}</span>
                     {t}
                   </li>
                 ))}

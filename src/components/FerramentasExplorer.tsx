@@ -158,7 +158,7 @@ export function FerramentasExplorer({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar por nome ou pelo que resolve…"
-              className="w-full rounded-md border border-line bg-surface py-3 pl-11 pr-4 text-[0.9375rem] text-ink placeholder:text-ink-3/70 transition-colors duration-150 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40"
+              className="w-full rounded-md border border-line bg-surface py-3 pl-11 pr-4 text-[0.9375rem] text-ink placeholder:text-ink-3 transition-colors duration-150 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40"
             />
           </div>
         </Reveal>

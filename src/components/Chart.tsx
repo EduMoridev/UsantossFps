@@ -54,7 +54,7 @@ export function DeltaBars({ metrics, compact = false }: { metrics: Metric[]; com
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
                     <div
                       className={`h-full origin-left rounded-full transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        isAfter ? "bg-accent" : "bg-[#52525b]"
+                        isAfter ? "bg-accent" : "bg-ink-3"
                       }`}
                       data-w={`${((v / max) * 100).toFixed(1)}%`}
                       style={{
@@ -100,7 +100,7 @@ export function FrametimeChart() {
         </div>
         <div className="flex gap-4 font-mono text-[0.625rem] uppercase tracking-[0.1em]">
           <span className="flex items-center gap-1.5 text-ink-3">
-            <span className="h-0.5 w-4 bg-[#52525b]" /> antes
+            <span className="h-0.5 w-4 bg-ink-3" /> antes
           </span>
           <span className="flex items-center gap-1.5 text-accent">
             <span className="h-0.5 w-4 bg-accent" /> depois
@@ -112,7 +112,7 @@ export function FrametimeChart() {
         {[0.25, 0.5, 0.75].map((g) => (
           <line key={g} x1="0" x2={W} y1={H * g} y2={H * g} stroke="#27272a" strokeWidth="1" />
         ))}
-        <path d={path(before)} fill="none" stroke="#52525b" strokeWidth="2" strokeLinejoin="round" />
+        <path d={path(before)} className="stroke-ink-3" fill="none" strokeWidth="2" strokeLinejoin="round" />
         <path d={path(after)} fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinejoin="round" />
       </svg>
     </div>

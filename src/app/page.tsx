@@ -202,7 +202,7 @@ export default function Home() {
             <Reveal key={s.n} delay={i * 70} dir={i % 2 === 0 ? "left" : "right"}>
               <div className="flex h-full flex-col gap-4 bg-surface p-7">
                 <div className="flex items-center gap-3">
-                  <span className="font-display text-[2.5rem] leading-none tracking-tight text-accent/25">
+                  <span className="font-display text-[2.5rem] leading-none tracking-tight text-accent-text">
                     {s.n}
                   </span>
                   <span className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink-3">

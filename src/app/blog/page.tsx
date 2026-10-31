@@ -50,7 +50,7 @@ export default function BlogPage() {
             {[38, 92, 41, 88, 30, 95, 44, 90, 25, 86].map((h, i) => (
               <div
                 key={i}
-                className={`flex-1 rounded-sm ${i % 2 ? "bg-accent/70" : "bg-[#52525b]"}`}
+                className={`flex-1 rounded-sm ${i % 2 ? "bg-accent/70" : "bg-ink-3"}`}
                 style={{ height: `${h}%` }}
               />
             ))}

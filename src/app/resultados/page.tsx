@@ -115,7 +115,7 @@ export default function ResultadosPage() {
               { t: "Ponto de restauração antes de tudo", d: "Se você quiser voltar ao estado original para comparar, é um clique." },
             ].map((m, i) => (
               <div key={m.t} className="flex gap-4 rounded-md border border-line bg-surface p-5">
-                <span className="font-mono text-sm text-accent/50">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-sm text-accent-text">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <div className="text-[0.9375rem] font-semibold text-ink">{m.t}</div>
                   <div className="mt-1 text-sm leading-relaxed text-ink-3">{m.d}</div>

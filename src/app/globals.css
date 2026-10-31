@@ -24,6 +24,17 @@
   --color-accent-600: #16a34a;  /* green-600 — hover/pressed */
   --color-accent-700: #15803d;  /* green-700 — bordas/gradientes profundos */
   --color-accent-soft: #4ade80; /* green-400 — glow/hover claro */
+  /* Verde "de texto": numerais/índices decorativos e ícones pequenos na cor
+     de marca (ex.: "01" de passo, estrela preenchida) usavam accent com
+     opacidade reduzida (accent/25, /50, /60) pra parecer discreto — opacidade
+     sobre texto falha WCAG porque o contraste real depende do que está atrás.
+     Este token troca "opacidade" por "mistura sólida": color-mix(in oklab,
+     accent 55%, ink-3 45%) — mesmo cálculo que o HeroUI usa pra
+     --accent-soft-foreground, reproduzido em scripts/audit-contrast.mjs
+     (colorMixOklab). Contraste >= 6.1:1 contra base/surface/surface-2,
+     bem acima do mínimo de 4.5:1 pra texto pequeno — nunca use com opacidade
+     por cima, ou volta ao mesmo problema. */
+  --color-accent-text: #71b684;
 
   /* --- Tipografia ---
      --font-display vem do `variable: "--font-display"` do next/font em

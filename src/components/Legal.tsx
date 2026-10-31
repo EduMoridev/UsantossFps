@@ -40,7 +40,7 @@ export function LegalDoc({
               <Reveal key={s.id} dir={i % 2 === 0 ? "left" : "right"}>
                 <section id={s.id} className="scroll-mt-28">
                   <h2 className="mb-4 flex items-baseline gap-3 text-[1.25rem] tracking-[-0.02em]">
-                    <span className="font-mono text-sm text-accent/50">
+                    <span className="font-mono text-sm text-accent-text">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {s.title}

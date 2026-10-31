@@ -21,7 +21,7 @@ const HARDWARE_FIELDS = [
 ] as const;
 
 const inputCls =
-  "w-full rounded-md border border-line bg-surface px-4 py-3 text-[0.9375rem] text-ink placeholder:text-ink-3/70 transition-colors duration-150 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40";
+  "w-full rounded-md border border-line bg-surface px-4 py-3 text-[0.9375rem] text-ink placeholder:text-ink-3 transition-colors duration-150 focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40";
 
 const labelCls = "mb-2 block text-[0.8125rem] font-medium text-ink-2";
 

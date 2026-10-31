@@ -138,7 +138,7 @@ export function Stars({ n = 5 }: { n?: number }) {
           key={i}
           name="star"
           size={13}
-          className={i < n ? "fill-accent/25" : "opacity-25"}
+          className={i < n ? "fill-accent-text" : "text-ink-3"}
         />
       ))}
     </div>

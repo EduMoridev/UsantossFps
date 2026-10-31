@@ -14,7 +14,7 @@ function CellValue({ value }: { value: ComparisonCell }) {
     </>
   ) : (
     <>
-      <Icon name="minus" size={16} className="text-line" aria-hidden="true" />
+      <Icon name="minus" size={16} className="text-ink-3" aria-hidden="true" />
       <span className="sr-only">Não incluso</span>
     </>
   );

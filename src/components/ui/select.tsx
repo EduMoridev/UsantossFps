@@ -18,7 +18,7 @@ export const SelectTrigger = React.forwardRef<
     className={cn(
       "flex w-full items-center justify-between gap-2 rounded-md border border-line bg-surface px-4 py-3 text-left text-[0.9375rem] text-ink transition-colors duration-150",
       "focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40",
-      "data-[placeholder]:text-ink-3/70",
+      "data-[placeholder]:text-ink-3",
       className
     )}
     {...props}
