@@ -65,6 +65,39 @@ e reflete em todas as páginas.
 
 ---
 
+## Tecnologias
+
+| Camada | Escolha | Por quê |
+|---|---|---|
+| Framework | Next.js 15.5 (App Router) | Rotas em arquivos, renderização no servidor por padrão e exportação estática opcional |
+| Biblioteca de UI | React 19.1 | Server Components, que mantêm fora do navegador o código que não precisa rodar lá |
+| Linguagem | TypeScript 5.6 | Conteúdo tipado em `src/lib/site.ts`: dado faltando ou no formato errado quebra o build, não a página |
+| Estilo | Tailwind CSS v4 | Tokens declarados em `@theme` no próprio CSS, sem arquivo de configuração separado |
+| Componentes | HeroUI 3.2 + Radix UI | Acessibilidade, foco por teclado e estados prontos, em vez de reimplementar |
+| Animação | Motion 13 | Transições declarativas, respeitando `prefers-reduced-motion` |
+| Ícones | Lucide React | Conjunto SVG consistente, importado ícone a ícone |
+| Busca | Fuse.js + cmdk | Busca tolerante a erro de digitação nas páginas de conteúdo |
+| Tipografia | Fontsource (Space Grotesk, Inter) | Fontes auto-hospedadas, sem requisição a servidor de terceiros |
+
+**Requisito:** Node.js 22.6 ou superior — os scripts de verificação usam
+`--experimental-strip-types`, disponível a partir dessa versão.
+
+### Verificações automáticas antes do build
+
+O `prebuild` roda quatro scripts e **interrompe a publicação** se algum falhar:
+
+| Script | O que impede |
+|---|---|
+| `build-scripts-manifest.mjs` | Gera o índice dos scripts `.bat`; falha se algum estiver sem cabeçalho de metadados |
+| `check-pcs.mjs` | Configuração de PC sem faixa de preço pesquisada |
+| `check-servicos.mjs` | Serviço sem descrição ou sem preço |
+| `audit-contrast.mjs` | Par de cores abaixo do contraste mínimo da WCAG 2.1 AA |
+
+Cada um roda isolado com `npm run check:pcs`, `check:servicos` ou
+`check:contrast`.
+
+---
+
 ## Rodar
 
 ```bash
