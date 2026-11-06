@@ -39,11 +39,17 @@ contratar.
 
 ## 3. Introdução
 
-A UsantossFps é uma organização que presta serviço de otimização remota de
+A UsantoosFps é uma organização que presta serviço de otimização remota de
 computadores para jogos: ajustes de sistema operacional, drivers, BIOS e rede
 para aumentar FPS e reduzir latência, sem necessidade de troca de hardware.
-Esta Entrega 1 corresponde à fundação em HTML do site institucional da
-organização, ainda sem estilização visual (CSS será adicionado na Entrega 2).
+
+O projeto partiu de uma fundação em HTML semântico, sem estilização, e evoluiu
+para uma aplicação completa em Next.js 15 com App Router e Tailwind CSS v4:
+15 rotas, tema escuro nativo, design system documentado e todo o conteúdo
+centralizado em `src/lib/site.ts` — trocar um preço ou um telefone é uma linha
+e reflete em todas as páginas.
+
+**Site publicado:** <https://usantoss-fps.vercel.app>
 
 ---
 
