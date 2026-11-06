@@ -17,6 +17,26 @@ App Router, 15 rotas, dark mode nativo e conteúdo centralizado em um arquivo s�
 ---
 
 
+## 2. Organização escolhida
+
+**Nome:** UsantoosFps
+**Segmento:** otimização remota de computadores para jogos
+**Responsável:** Nycolas Santos Marcelino (CEO)
+**Canais atuais:** Discord, Instagram, TikTok e YouTube — [@usantoosfps](https://instagram.com/usantoosfps)
+
+A organização atende exclusivamente de forma remota, por acesso assistido à
+máquina do cliente, e hoje concentra divulgação, atendimento e suporte em redes
+sociais e em um servidor no Discord. Não há endereço físico nem catálogo público
+de serviços: cada negociação começa em uma conversa privada.
+
+O site institucional atende justamente essa lacuna — apresentar serviços e
+planos com preço visível, responder às dúvidas recorrentes antes do primeiro
+contato e encaminhar ao canal de agendamento um cliente que já sabe o que vai
+contratar.
+
+---
+
+
 ## 3. Introdução
 
 A UsantossFps é uma organização que presta serviço de otimização remota de
