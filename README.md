@@ -6,13 +6,13 @@ App Router, 15 rotas, dark mode nativo e conteúdo centralizado em um arquivo s�
 
 ## 1. Integrantes do grupo
 
-| Nome completo | RGM | Usuário GitHub |
+| Nome completo | RGM | GitHub |
 |---|---|---|
-| [Eduardo Silva Morishita] | [48501883 ] | [https://github.com/EduMoridev] |
-| [Vinicius Santos Conceição] | [47451530 ] | [https://github.com/VinnySantosDev] |
-| [Bruna Soares De Almeida] | [47552158 ] | [https://github.com/BrunaAlmeida01] |
-| [Vinicius Henrique Silva Ferreira] | [47449438 ] | [https://github.com/VinnyzScript] |
-| [Jorge Gabriel Cordeiro do Nascimento] | [48097501 ] | [https://github.com/EGROJ-dev] |
+| Eduardo Silva Morishita | 48501883 | [@EduMoridev](https://github.com/EduMoridev) |
+| Vinicius Santos Conceição | 47451530 | [@VinnySantosDev](https://github.com/VinnySantosDev) |
+| Bruna Soares De Almeida | 47552158 | [@BrunaAlmeida01](https://github.com/BrunaAlmeida01) |
+| Vinicius Henrique Silva Ferreira | 47449438 | [@VinnyzScript](https://github.com/VinnyzScript) |
+| Jorge Gabriel Cordeiro do Nascimento | 48097501 | [@EGROJ-dev](https://github.com/EGROJ-dev) |
 
 ---
 
