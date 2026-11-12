@@ -50,6 +50,7 @@ centralizado em `src/lib/site.ts` — trocar um preço ou um telefone é uma lin
 e reflete em todas as páginas.
 
 **Site publicado:** <https://usantoss-fps.vercel.app>
+**Vídeo de apresentação** <https://youtu.be/LpApLv5dUpU?is=Hgp6sWmBY3zDXj-K>
 
 ---
 
